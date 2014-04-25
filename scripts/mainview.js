@@ -1,9 +1,18 @@
 var editor=null;
+var text=null;
+var graphics=null;
+var $j = jQuery.noConflict();
 
 $j(document).ready
 (
 	function()
 	{
+		text=new Text();
+		text.init();
+		text.setTextArea('textoutputarea');
+		graphics=new Graphics();
+		graphics.init('canvas');
+	
 		var browserWindow=$j(window);
 		var htmlDocument=$j(document);
 		var workviewcontainer=$j("#workviewcontainer");
