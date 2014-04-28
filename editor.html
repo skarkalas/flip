@@ -7,7 +7,7 @@
 	<title>FLIPLearning</title>
 
 	<link rel="icon" type="image/x-icon" href="./images/monitor.ico">   
-	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.4/themes/pepper-grinder/jquery-ui.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.4/themes/start/jquery-ui.css" media="screen">
 	<link rel="stylesheet" type="text/css" href="./styles/toggle-switch.css" media="screen">
 	<link rel="stylesheet" type="text/css" href="./styles/mainview.css" media="screen">
 
@@ -23,6 +23,7 @@
 </head>
   
 <body>
+<div id="fb-root"></div>
 
 <div id="banner">
 	<img id="logo" src="./images/fractal.gif"></img>
@@ -43,8 +44,27 @@
 				<li><a href="#"><span class="ui-icon ui-icon-lightbulb"></span>Get Help</a></li>
 				<li><a href="#"><span class="ui-icon ui-icon-check"></span>Assess</a></li>
 				<li><a href="#"><span></span>Misc</a></li>
+				<li><a href="#"><span></span>Visualise</a></li>
 				</ul>
 			</div>
+				<div id="fbstatus">
+		<table>
+		<tr>
+			<td colspan='2'>
+				<fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button>
+			</td>
+		</tr>
+		<tr>
+			<td>user logged in:</td>
+			<td id="fbUser">..</td>
+		</tr>
+		<tr>
+			<td>app authenticated:</td>
+			<td id="fbApp">..</td>
+		</tr>
+		</table>
+	</div>
+
 		</div>
 		<div id="workviewcontainer">
 		<div id="codeviewcontainer">
@@ -52,20 +72,33 @@
 				<h3>Editor</h3>
 				<div id="editorview">
 				<div id="editor">
-(
-	function foo()
-	{
-		var i;
-		var message="";
-		
-		for (i = 0; i &lt; arguments.length; i++)
-		{			
-			message += arguments[i];
-		}
-		
-		alert(message + "Learning");
-	}
-)('I','F','C','P');
+var x = [1, 2, 3];
+var y = [4, 5, 6];
+var z = y;
+y = x;
+x = z;
+
+x = [1, 2, 3];
+y = x;
+x.push(4);
+y.push(5);
+z = [1, 2, 3, 4, 5];
+x.push(6);
+y.push(7);
+
+y = 'Hello!'
+
+var foo = function(lst) {
+      lst.push('hello');
+          bar(lst);
+}
+
+var bar = function(lst) {
+      console.log(lst);
+}
+
+foo(x);
+foo(z);
 				</div>
 				</div>
 				<h3>Language Reference</h3>

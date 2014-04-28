@@ -7,6 +7,68 @@ $j(document).ready
 (
 	function()
 	{
+		//setup ajax
+		$j.ajaxSetup({cache: true});
+		
+		//load facebook JS SDK
+		$j.getScript
+		(
+			'//connect.facebook.net/en_UK/all.js',
+			function()
+			{
+				FB.init
+				(
+					{
+						appId: '629141253835751',
+						status: true,
+						cookie: true,
+						xfbml: true
+					}
+				);     
+
+				FB.Event.subscribe
+				(
+					'auth.authResponseChange',
+					function(response)
+					{
+						updateUserStatus(response);
+					}
+				);
+				
+				FB.getLoginStatus
+				(
+					function(response)
+					{
+						updateUserStatus(response);
+					}
+				);
+			}
+		);
+
+		function updateUserStatus(response)
+		{
+			var fbUser = $j("#fbUser");
+			var fbApp = $j("#fbApp");
+			
+			if (response.status === 'connected')
+			{
+				var uid = response.authResponse.userID;
+				var accessToken = response.authResponse.accessToken;
+				fbUser.text(uid);
+				fbApp.text('yes');
+			}
+			else if (response.status === 'not_authorized')
+			{
+				fbUser.text(uid);
+				fbApp.text('no');
+			}
+			else
+			{
+				fbUser.text('none');
+				fbApp.text('no');
+			}	
+		}
+		
 		text=new Text();
 		text.init();
 		text.setTextArea('textoutputarea');
@@ -91,14 +153,58 @@ $j(document).ready
 					{
 						displayAssessment();
 					}
-					else
+					else if(action.toLowerCase()==='misc')
 					{
 						displayMisc();
+					}
+					else
+					{
+						visualise();
 					}
 				}
 			}
 		);
-	
+
+		//define visualiser popup window
+		var popup = null;
+		
+		//define message handler (the service sends a message after the popup is ready to be used)
+		function receiveMessage(event)
+		{
+			//if the origin of the message is not what is expected stop
+			if (event.origin === "http://medea:8888")
+			{
+				//get the message
+				var message = event.data;
+				
+				//prepare the code
+				//var code = "var x=5;\nvar y=7;\nvar z=x+y;\nvar l=z;\nconsole.log(z);"
+				var code = getCode();
+
+				//if the message says that the service is available post a new message with the code
+				if(message === 'jtutor:ok')
+				{
+					popup.postMessage(code, "http://medea:8888");
+				}
+			}
+		}
+
+		window.addEventListener("message", receiveMessage, false);
+		
+		function visualise()
+		{
+			var code=getCode();
+				
+			if(code==="")
+			{
+				alert("There is no code to visualise.");
+				return;
+			}
+
+			//create a popup window pointing at the service
+			popup = window.open('http://medea:8888', '_blank', "width=1000,height=800");
+		}
+		
 		function displayGraphics()
 		{
 			graphics.clear();
