@@ -21,24 +21,28 @@ alter table students modify datetime default sysdate;
 
 --table definition
 ------------------
-create table activity
+create table journal
 (
 	id number,
 	state char(1),
 	datetime date,
-	student_id number
+	student_id number,
+	attempt_id number,
+	misconception_identified_id number
 );
 
 --sequences
 ----------------
-create sequence activity_seq start with 1 increment by 1 nocycle nocache;
+create sequence journal_seq start with 1 increment by 1 nocycle nocache;
 
 --constraints
 -------------
-alter table activity add constraint activity_id_pk primary key (id);
-alter table activity add constraint activity_state_values check (state in ('A','I'));
-alter table activity add constraint activity_student_id_nn check (student_id is not null);
-alter table activity add constraint activity_student_id_fk foreign key (student_id) references students (id) on delete cascade;
+alter table journal add constraint journal_id_pk primary key (id);
+alter table journal add constraint journal_state_values check (state in ('A','I','M','H','S'));
+alter table journal add constraint journal_student_id_nn check (student_id is not null);
+alter table journal add constraint journal_student_id_fk foreign key (student_id) references students (id) on delete cascade;
+alter table journal add constraint journal_attempt_id_fk foreign key (attempt_id) references attempts (id) on delete cascade;
+alter table journal add constraint journal_misc_ident_id_fk foreign key (misconception_identified_id) references misconceptions_identified (id) on delete cascade;
 
 --default values
 ----------------
@@ -187,7 +191,7 @@ alter table concepts add constraint concepts_description_nn check (description i
 create table attempts
 (
 	id number,
-	code varchar2(20),
+	code varchar2(4000),
 	datetime date,
 	exercise_id number
 );
@@ -210,13 +214,74 @@ alter table attempts modify datetime default sysdate;
 
 --table definition
 ------------------
+create table tests
+(
+	id number,
+	datetime date,
+	attempt_id number,
+	tester_id number,
+	test varchar2(4000),
+	result char(1),
+	comments varchar2(1000)
+);
+
+--sequences
+----------------
+create sequence tests_seq start with 1 increment by 1 nocycle nocache;
+
+--constraints
+-------------
+alter table tests add constraint tests_id_pk primary key (id);
+alter table tests add constraint tests_datetime_nn check (datetime is not null);
+alter table tests add constraint tests_attempt_id_nn check (attempt_id is not null);
+alter table tests add constraint tests_attempt_id_fk foreign key (attempt_id) references attempts (id) on delete cascade;
+alter table tests add constraint tests_tester_id_nn check (tester_id is not null);
+alter table tests add constraint tests_tester_id_fk foreign key (tester_id) references students (id) on delete cascade;
+alter table tests add constraint tests_test_nn check (test is not null);
+alter table tests add constraint tests_result_nn check (result is not null);
+alter table tests add constraint tests_result_values check (result in ('P','F'));
+alter table tests add constraint tests_comments_nn check (comments is not null);
+
+--default values
+----------------
+alter table tests modify datetime default sysdate;
+
+--table definition
+------------------
+create table misconceptions_unclassified
+(
+	id number,
+	attempt_id number,
+	datetime date,
+	code_extract varchar2(4000)
+);
+
+--sequences
+----------------
+create sequence misconceptions_unclassified_seq start with 1 increment by 1 nocycle nocache;
+
+--constraints
+-------------
+alter table misconceptions_unclassified add constraint misc_uclas_id_pk primary key (id);
+alter table misconceptions_unclassified add constraint misc_uclas_attempt_id_nn check (attempt_id is not null);
+alter table misconceptions_unclassified add constraint misc_uclas_attempt_id_fk foreign key (attempt_id) references attempts (id) on delete cascade;
+alter table misconceptions_unclassified add constraint misc_uclas_datetime_nn check (datetime is not null);
+alter table misconceptions_unclassified add constraint misc_uclas_code_extract_nn check (code_extract is not null);
+
+--default values
+----------------
+alter table misconceptions_unclassified modify datetime default sysdate;
+
+--table definition
+------------------
 create table misconceptions_identified
 (
 	id number,
 	rule_id number,
-	exercise_id number,
+	attempt_id number,
 	datetime date,
 	state char(2),
+	code_extract varchar2(4000),
 	support_provided number(1)
 );
 
@@ -229,11 +294,12 @@ create sequence misconceptions_identified_seq start with 1 increment by 1 nocycl
 alter table misconceptions_identified add constraint misc_ident_id_pk primary key (id);
 alter table misconceptions_identified add constraint misc_ident_rule_id_nn check (rule_id is not null);
 alter table misconceptions_identified add constraint misc_ident_rule_id_fk foreign key (rule_id) references rules (id) on delete cascade;
-alter table misconceptions_identified add constraint misc_ident_exercise_id_nn check (exercise_id is not null);
-alter table misconceptions_identified add constraint misc_ident_exercise_id_fk foreign key (exercise_id) references exercises (id) on delete cascade;
+alter table misconceptions_identified add constraint misc_ident_attempt_id_nn check (attempt_id is not null);
+alter table misconceptions_identified add constraint misc_ident_attempt_id_fk foreign key (attempt_id) references attempts (id) on delete cascade;
 alter table misconceptions_identified add constraint misc_ident_datetime_nn check (datetime is not null);
 alter table misconceptions_identified add constraint misc_ident_state_nn check (state is not null);
 alter table misconceptions_identified add constraint misc_ident_state_values check (state in ('L','NL'));
+alter table misconceptions_identified add constraint misc_ident_code_extract_nn check (code_extract is not null);
 alter table misconceptions_identified add constraint misc_ident_sup_prov_nn check (support_provided is not null);
 alter table misconceptions_identified add constraint misc_ident_sup_prov_values check (support_provided >= 0);
 
