@@ -12,13 +12,16 @@
 	<link rel="stylesheet" type="text/css" href="./styles/mainview.css" media="screen">
 
 	<script type="text/javascript" charset="utf-8" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-	<script type="text/javascript" charset="utf-8" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>	
-	<script type="text/javascript" charset="utf-8" src="https://dl.dropboxusercontent.com/u/15318052/LKLProjects/3DaysJSDebugger/scripts/debugger.js"></script> 
-	<script type="text/javascript" charset="utf-8" src="https://dl.dropboxusercontent.com/u/15318052/LKLProjects/3DaysJSGraphics/scripts/graphics.js"></script> 
-	<script type="text/javascript" charset="utf-8" src="https://dl.dropboxusercontent.com/u/15318052/LKLProjects/3DaysJSText/scripts/text.js"></script> 
+	<script type="text/javascript" charset="utf-8" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./scripts/esprima.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./scripts/taffy.js"></script>
 	<script type="text/javascript" charset="utf-8" src="./scripts/jslint.js"></script> 
 	<script type="text/javascript" charset="utf-8" src="./scripts/aceeditor/ace.js"></script> 
 	<script type="text/javascript" charset="utf-8" src="./scripts/jquery.jqDock.min.js"></script>	
+	<script type="text/javascript" charset="utf-8" src="https://dl.dropboxusercontent.com/u/15318052/LKLProjects/3DaysJSDebugger/scripts/debugger.js"></script> 
+	<script type="text/javascript" charset="utf-8" src="https://dl.dropboxusercontent.com/u/15318052/LKLProjects/3DaysJSGraphics/scripts/graphics.js"></script> 
+	<script type="text/javascript" charset="utf-8" src="https://dl.dropboxusercontent.com/u/15318052/LKLProjects/3DaysJSText/scripts/text.js"></script> 
+	<script type="text/javascript" charset="utf-8" src="https://dl.dropboxusercontent.com/u/15318052/LKLProjects/3DaysJSRBReasoner/scripts/rbreasoner.js"></script> 
 	<script type="text/javascript" charset="utf-8" src="./scripts/mainview.js"></script> 
 </head>
   
@@ -72,33 +75,15 @@
 				<h3>Editor</h3>
 				<div id="editorview">
 				<div id="editor">
-var x = [1, 2, 3];
-var y = [4, 5, 6];
-var z = y;
-y = x;
-x = z;
+var x = [2,5,1,8,9];
 
-x = [1, 2, 3];
-y = x;
-x.push(4);
-y.push(5);
-z = [1, 2, 3, 4, 5];
-x.push(6);
-y.push(7);
-
-y = 'Hello!'
-
-var foo = function(lst) {
-      lst.push('hello');
-          bar(lst);
+for (var i = 0; i <= 5; i++)
+{
+ var sum = 0;
+ sum += x[i];
 }
 
-var bar = function(lst) {
-      console.log(lst);
-}
-
-foo(x);
-foo(z);
+alert(sum);
 				</div>
 				</div>
 				<h3>Language Reference</h3>

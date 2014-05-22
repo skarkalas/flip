@@ -1,6 +1,13 @@
 var editor=null;
+
+//change references to ace constructors
+var Search = ace.require('ace/search').Search;
+var Range = ace.require('ace/range').Range;
+
 var text=null;
 var graphics=null;
+var reasoner = null;
+
 var $j = jQuery.noConflict();
 
 $j(document).ready
@@ -74,6 +81,11 @@ $j(document).ready
 		text.setTextArea('textoutputarea');
 		graphics=new Graphics();
 		graphics.init('canvas');
+		editor=ace.edit("editor");
+		editor.setTheme("ace/theme/eclipse");
+		editor.getSession().setMode("ace/mode/javascript");
+		reasoner = new RBReasoner();
+		reasoner.init(editor);
 	
 		var browserWindow=$j(window);
 		var htmlDocument=$j(document);
@@ -147,7 +159,7 @@ $j(document).ready
 					}
 					else if(action.toLowerCase()==='get help')
 					{
-						displayHelp();
+						analyseCode();
 					}
 					else if(action.toLowerCase()==='assess')
 					{
@@ -249,11 +261,7 @@ $j(document).ready
 				resizeContainers();
 			}
 		);
-		
-		editor=ace.edit("editor");
-		editor.setTheme("ace/theme/eclipse");
-		editor.getSession().setMode("ace/mode/javascript");
-			
+					
 		var icons=
 		{
 			header: "ui-icon-circle-arrow-e",
@@ -370,42 +378,76 @@ $j(document).ready
 				
 			if(code==="")
 			{
-				alert("There is no code to evaluate/execute.");
+				alert("There is no code to execute.");
 				return;
 			}
-
-			var options=getJSLintOptions();
-			var report=null;
 			
-			if(checkCode(code,options)===true)
-			{			
-				report=getErrorReport();
-				debugoutput.html(report);
-
-				if(code.match(/graphics\./)===null)
-				{
-					displayText();
-				}
-				else
-				{
-					displayGraphics();
-				}
-
-				executeCode(code);
-
-				var errors=document.getElementById('errorreport');
-				
-				if(errors.rows.length!==0)
-				{
-					displayDebug();
-				}
+			if(code.match(/graphics\./)===null)
+			{
+				displayText();
 			}
 			else
 			{
-				report=getQualityReport();
-				debugoutput.html(report);
-				displayDebug();
+				displayGraphics();
 			}
+
+			executeCode(code);
+		}
+		
+		function analyseCode()
+		{
+			var code=getCode();
+				
+			if(code==="")
+			{
+				alert("There is no code to analyse.");
+				return;
+			}
+
+			var level2OK = checkLevel2(code);
+			var level3OK = checkLevel3();
+			
+			if(level2OK === false || level3OK === false)
+			{
+				displayHelp();
+				return;
+			}
+			
+			if(code.match(/graphics\./)===null)
+			{
+				displayText();
+			}
+			else
+			{
+				displayGraphics();
+			}
+
+			executeCode(code);
+		}
+
+		function checkLevel3()
+		{
+			if(reasoner.getSupport() === false)
+			{
+				return true;
+			}
+			
+			var report = reasoner.getMisconceptionsReport();
+			helpoutput.html(helpoutput.html() + '<br/>' + report);
+		}
+		
+		function checkLevel2(code)
+		{
+			var options=getJSLintOptions();
+			
+			if(checkCode(code,options) === false)
+			{
+				var report=getQualityReport();
+				helpoutput.html(report);
+				return false;
+			}
+			
+			return true;
 		}
 		
 		function getJSLintOptions()
@@ -527,24 +569,14 @@ function fixErrorLog()
 	};
 }
 
-function getErrorReport()
-{
-	var html="";
-
-	html+="<table id='errorreport'>";
-	html+="<caption>Error Report: "+new Date().toLocaleString()+"</caption>";
-	html+="</table>";
-	return html;
-}
-
 function getQualityReport()
 {
 	var data=JSLINT.data();
 	var errors=data.errors;
 	var html="";
 
-	html+="<table id='errorreport'>";
-	html+="<caption>Code Quality Report: "+new Date().toLocaleString()+"</caption>";
+	html+="<table id='level2report'>";
+	html+="<caption>Level 2 Report: "+new Date().toLocaleString()+"</caption>";
 
 	for(var i=0; i<errors.length; i++)
 	{
@@ -591,16 +623,19 @@ function executeCode(code)
 
 function getCode()
 {
+	//get highlighted text
 	var code=editor.getCopyText();
-	code=$j.trim(code);
 
-	if(code!="")
+	if(code.trim() === '')
 	{
-		return code;
-	}		
-	
-	code=editor.getSession().getValue();
-	code=$j.trim(code);
+		//get code that is not highlighted
+		code=editor.getSession().getValue();
+	}
+
+	if(code.trim() === '')
+	{
+		return;
+	}
 
 	return code;
 }

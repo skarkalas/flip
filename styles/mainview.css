@@ -129,14 +129,14 @@ div#cube
 #cube .right 
 {
 	transform: rotateY(90deg) translateZ(100px); 
-/*	background: green; */
+	background: green; 
 	display: none;
 }
 
 #cube .left
 {
 	transform: rotateY(-90deg) translateZ(100px);
-	background: orange;
+/*	background: orange; */
 	display: none;
 }
 
@@ -337,25 +337,30 @@ input
 	text-align: center;
 }
 
-#errorreport
+#level2report, #level3report
 {
-	width: 100%
+	width: 100%;
 	font-family:"Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 	font-size:12px;
 	border-radius: 30px 30px 30px 30px;
 }
 
-#errorreport tr
+#level2report tr, #level3report tr
 {
 	background-color:#EBEBEB;
 }
 
-#errorreport .evidence
+#level2report .evidence
 {
 	background-color:#A0C8DA;
 }
 
-#errorreport caption
+#level3report .evidence
+{
+	background-color:#B5D692;
+}
+
+#level2report caption
 {
 	font-size:14px;
 	color:#FCFDFD;
@@ -363,17 +368,25 @@ input
 	padding: 10px;
 }
 
-#errorreport td
+#level3report caption
+{
+	font-size:14px;
+	color:#FCFDFD;
+	background-color:#7FB644;
+	padding: 10px;
+}
+
+#level2report td, #level3report td
 {
 	padding:5px;
 }
 
-#errorreport cite
+#level2report cite, #level3report cite
 {
 	font-size:10px;
 }
 
-#errorreport .divider
+#level2report .divider, #level3report .divider
 {
 	background-color:transparent;
 }
