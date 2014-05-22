@@ -7,6 +7,8 @@ var Range = ace.require('ace/range').Range;
 var text=null;
 var graphics=null;
 var reasoner = null;
+var journal = null;
+var codebase = null;
 
 var $j = jQuery.noConflict();
 
@@ -84,8 +86,10 @@ $j(document).ready
 		editor=ace.edit("editor");
 		editor.setTheme("ace/theme/eclipse");
 		editor.getSession().setMode("ace/mode/javascript");
+		journal = TAFFY();				//empty database for journal
+		codebase = TAFFY();				//empty database for code
 		reasoner = new RBReasoner();
-		reasoner.init(editor);
+		reasoner.init(editor, journal, codebase);
 	
 		var browserWindow=$j(window);
 		var htmlDocument=$j(document);
