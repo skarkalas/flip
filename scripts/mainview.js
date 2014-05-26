@@ -93,9 +93,9 @@ $j(document).ready
 	
 		var browserWindow=$j(window);
 		var htmlDocument=$j(document);
-		var workviewcontainer=$j("#workviewcontainer");
-		var codeviewcontainer=$j("#codeviewcontainer");
-		var outputviewcontainer=$j("#outputviewcontainer");
+//		var workviewcontainer=$j("#workviewcontainer");
+//		var codeviewcontainer=$j("#codeviewcontainer");
+//		var outputviewcontainer=$j("#outputviewcontainer");
 		var outputview=$j("#outputview");
 		var output=$j("#output");
 		var canvas=$j("#canvas");
@@ -113,9 +113,9 @@ $j(document).ready
 		
 		function resizeContainers()
 		{
-			var half=Math.floor(workviewcontainer.width()/2)-5;
-			codeviewcontainer.width(half);
-			outputviewcontainer.width(half);
+			//var half=Math.floor(workviewcontainer.width()/2)-5;
+			//codeviewcontainer.width(half);
+			//outputviewcontainer.width(half);
 			
 			cube.width(output.width());
 			cube.height(output.height());
@@ -130,7 +130,7 @@ $j(document).ready
 			assessmentoutput.height(output.height());
 			miscoutput.width(output.width());
 			miscoutput.height(output.height());
-			positionDockMenu();
+			//positionDockMenu();
 		}
 		
 		function positionDockMenu()
@@ -385,6 +385,41 @@ $j(document).ready
 				alert("There is no code to execute.");
 				return;
 			}
+
+			try
+			{
+				executeCode(code);
+			}
+			catch(e)
+			{
+				var arrayError = e.toString().split(':');
+				var errorType = arrayError[0];
+				var errorDescription = arrayError[1];
+
+				var html="";
+				html+="<table id='errorreport'>";
+				html+="<caption>Error Report: " + new Date().toLocaleString() + "</caption>";
+				html+="<tr>";
+				html+="<td>";
+				html+="<span>Error Type:</span>";
+				html+="</td>";
+				html+="<td>";
+				html+="<cite>" + errorType + "</cite>";
+				html+="</td>";
+				html+="</tr>";
+				html+="<tr>";
+				html+="<td>";
+				html+="<span>Error:</span>";
+				html+="</td>";
+				html+="<td class='evidence'>";
+				html+="<pre>" + errorDescription + "</pre>";
+				html+="</td>";
+				html+="</tr>";
+				html+="</table>";
+				debugoutput.html(html);
+				displayDebug();
+				return;
+			}
 			
 			if(code.match(/graphics\./)===null)
 			{
@@ -394,8 +429,6 @@ $j(document).ready
 			{
 				displayGraphics();
 			}
-
-			executeCode(code);
 		}
 		
 		function analyseCode()
@@ -770,4 +803,23 @@ function setHighlightToken(control)
 function setReadOnly(control)
 {
 	editor.setReadOnly(control.checked);
+}
+
+function readDoc(misconceptionName)
+{
+	var url = 'https://dl.dropboxusercontent.com/u/15318052/LKLProjects/3DaysJSReference/' + misconceptionName + '.htm';
+	var menu = $j("#codeview");
+	
+	//if the documentation tab is not visible, display it
+	var index = menu.accordion('option','active');
+	
+	if(index === 0)
+	{
+		menu.accordion('option', 'active', 1);
+	}
+	
+	$j.get(url, function (data)
+	{
+		$j('#docRef').html(data);
+	});
 }

@@ -7,7 +7,7 @@ b
 
 img#logo
 {
-	position: absolute; 
+	position: relative;
 	width: 60px;
 	height: 50px;
 	float: left;
@@ -19,18 +19,19 @@ div#logotext
 {
 	position: absolute; 
 	top: 0;
-	left: 100px;
+/*	left: 100px; */
 	width: 200px;
 	height: 50px;
 	box-shadow: 5px 5px 5px #888888;
 	border-radius: 0px 0px 10px 10px;
 	background-color: rgb(255,255,255);
+	line-height: 4em;
 }
 
 div#logotextfull
 {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-	margin: 0 auto;
+/*	margin: 0 auto; */
 	padding: 10px;
 	background-color: rgb(131,191,67);
 	color: white;
@@ -53,7 +54,6 @@ div#fbstatus
 	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 	font-size: 24px;
 	display: inline-block;
-	vertical-align: middle;
 	line-height: normal;   
 	letter-spacing:2px;
 }
@@ -70,6 +70,7 @@ div#fbstatus
 	color: rgb(131,191,67);
 }
 
+/*
 div#banner
 { 
 	position: absolute;
@@ -81,9 +82,17 @@ div#banner
 	line-height: 50px;
 	text-align: center;
 }
-
+*/
 
 /* main view */
+
+table#mainviewcontainer
+{
+	width: 99%;
+/*	height: 500px; */
+	position:absolute;
+	margin-top: 80px;
+}
 
 textarea#textoutputarea
 {
@@ -129,7 +138,7 @@ div#cube
 #cube .right 
 {
 	transform: rotateY(90deg) translateZ(100px); 
-	background: green; 
+/*	background: green; */
 	display: none;
 }
 
@@ -188,6 +197,7 @@ div#output
 {
 	position:relative;
 	perspective: 800px;
+	-webkit-perspective: 800px;
 }
 
 canvas#canvas
@@ -196,6 +206,7 @@ canvas#canvas
 	height: 100%;
 }
 
+/*
 div#mainviewcontainer
 { 
 	padding-top: 100px;
@@ -210,6 +221,7 @@ div#mainviewcontainer
 	clear:both;
 }
 
+
 #menuviewcontainer
 {
 	position: absolute;
@@ -217,12 +229,14 @@ div#mainviewcontainer
 	width: 200px;
 }
 
+
 #workviewcontainer
 {
 	position: relative;
 	right: 10px;
 	margin-left: 220px; 
 }
+
 
 #codeviewcontainer, #outputviewcontainer
 {
@@ -234,6 +248,7 @@ div#mainviewcontainer
 	position: relative;
 	left: 0px;
 }
+*/
 
 #editorview
 {
@@ -252,6 +267,7 @@ div#mainviewcontainer
 	left: 0;
 }
 
+/*
 #outputviewcontainer
 {
 	position: absolute;
@@ -259,6 +275,12 @@ div#mainviewcontainer
 }
 
 #menuviewcontainer, #codeviewcontainer, #outputviewcontainer
+{
+	height: 500px;
+}
+*/
+
+#outputview
 {
 	height: 500px;
 }
@@ -337,7 +359,7 @@ input
 	text-align: center;
 }
 
-#level2report, #level3report
+#level2report, #level3report, #errorreport
 {
 	width: 100%;
 	font-family:"Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
@@ -345,12 +367,12 @@ input
 	border-radius: 30px 30px 30px 30px;
 }
 
-#level2report tr, #level3report tr
+#level2report tr, #level3report tr, #errorreport tr
 {
 	background-color:#EBEBEB;
 }
 
-#level2report .evidence
+#level2report .evidence, #errorreport .evidence
 {
 	background-color:#A0C8DA;
 }
@@ -360,7 +382,7 @@ input
 	background-color:#B5D692;
 }
 
-#level2report caption
+#level2report caption, #errorreport caption
 {
 	font-size:14px;
 	color:#FCFDFD;
@@ -376,12 +398,12 @@ input
 	padding: 10px;
 }
 
-#level2report td, #level3report td
+#level2report td, #level3report td, #errorreport td
 {
 	padding:5px;
 }
 
-#level2report cite, #level3report cite
+#level2report cite, #level3report cite, #errorreport cite
 {
 	font-size:10px;
 }
