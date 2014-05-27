@@ -70,6 +70,13 @@ div#fbstatus
 	color: rgb(131,191,67);
 }
 
+#fbstatus
+{
+	font-family:"Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	color: #FFFFFF;
+	font-size:9px;
+}
+
 /*
 div#banner
 { 

@@ -47,17 +47,13 @@
 	<div id="fbstatus">
 		<table>
 		<tr>
-			<td colspan='2'>
-				<fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button>
+			<td id="fbUser"></td>
+			<td width='40%' align='right'>
+				<fb:login-button max_rows="1" size="small" show_faces="false" auto_logout_link="true"></fb:login-button>
 			</td>
 		</tr>
 		<tr>
-			<td>user logged in:</td>
-			<td id="fbUser">..</td>
-		</tr>
-		<tr>
-			<td>app authenticated:</td>
-			<td id="fbApp">..</td>
+			<td id="fbApp"></td>
 		</tr>
 		</table>
 	</div>	

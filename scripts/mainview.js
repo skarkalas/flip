@@ -58,24 +58,31 @@ $j(document).ready
 		{
 			var fbUser = $j("#fbUser");
 			var fbApp = $j("#fbApp");
-			
-			if (response.status === 'connected')
+			var status = response.status;
+
+			if (status === 'not_authorized')
 			{
-				var uid = response.authResponse.userID;
-				var accessToken = response.authResponse.accessToken;
-				fbUser.text(uid);
-				fbApp.text('yes');
+				fbUser.text('You are logged in');
+				fbApp.text('The application is not authenticated');
 			}
-			else if (response.status === 'not_authorized')
+			if (status === 'unknown')
 			{
-				fbUser.text(uid);
-				fbApp.text('no');
-			}
+				fbUser.text('You are not logged in');
+				fbApp.text('The application is not authenticated');
+			}	
 			else
 			{
-				fbUser.text('none');
-				fbApp.text('no');
-			}	
+				var uid = response.authResponse.userID;
+				var query = FB.Data.query('select name from user where uid={0}', uid);
+				query.wait
+				(
+					function(rows)
+					{	
+						fbUser.text('You are logged in as ' + rows[0].name);
+						fbApp.text('The application is authenticated');
+					}
+				);
+			}
 		}
 		
 		text=new Text();
