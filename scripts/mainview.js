@@ -11,6 +11,7 @@ var journal = null;
 var codebase = null;
 
 var $j = jQuery.noConflict();
+var displayVisualisation = null;
 
 $j(document).ready
 (
@@ -180,13 +181,38 @@ $j(document).ready
 					{
 						displayMisc();
 					}
-					else
+					else if(action.toLowerCase()==='report')
 					{
-						visualise();
+						reportProblemInCode();
 					}
 				}
 			}
 		);
+		
+		function reportProblemInCode()
+		{
+			var confirmation = confirm("This action will report the currently selected code in the editor as problematic.\nWould you like to continue?");
+			
+			if (confirmation === false)
+			{
+				return;
+			}		
+			
+			var code = getCode();
+
+			if(typeof code === 'undefined' || code.trim() === "")
+			{
+				alert("There is no code to report.");
+				return;
+			}
+			
+			//insert code into the codebase
+			var record = {};
+			record.code = code;
+			record.id = Date.now();
+			codebase.insert(record);		
+			alert("The issue has been reported. Thank you.");
+		}
 
 		//define visualiser popup window
 		var popup = null;
@@ -213,7 +239,7 @@ $j(document).ready
 		}
 
 		window.addEventListener("message", receiveMessage, false);
-		
+
 		function visualise()
 		{
 			var code=getCode();
@@ -225,8 +251,10 @@ $j(document).ready
 			}
 
 			//create a popup window pointing at the service
-			popup = window.open('http://medea:8888', '_blank', "width=1000,height=800");
+			popup = window.open('http://medea:8888', '_blank', 'resizable=no, left=0,top=0,width=' + screen.availWidth + ',height=' + screen.availHeight);
 		}
+		
+		displayVisualisation = visualise;
 		
 		function displayGraphics()
 		{
@@ -678,7 +706,7 @@ function getCode()
 
 	if(code.trim() === '')
 	{
-		return;
+		return '';
 	}
 
 	return code;

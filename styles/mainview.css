@@ -98,7 +98,7 @@ table#mainviewcontainer
 	width: 99%;
 /*	height: 500px; */
 	position:absolute;
-	margin-top: 80px;
+	margin-top: 90px;
 }
 
 textarea#textoutputarea
@@ -441,4 +441,58 @@ input
 .roundabout-in-focus 
 {
 	cursor: auto;
+}
+
+
+/* documentation */
+article
+{
+	font-family:"Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+}
+
+article > p
+{
+	font-size:14px;
+	text-align:justify;
+}
+
+article * img
+{
+	display: block;
+    margin: auto;
+}
+
+video
+{
+	border: 2px solid black;
+	margin: 0 auto;
+}
+
+article > pre
+{
+	background-color:#B5D692;
+}
+
+article * td
+{
+	text-align:center;
+	background-color:#7FB644;
+	color:#FFFFFF;
+}
+
+article * span
+{
+	font-size:24px;
+}
+
+article * div
+{
+	font-size:18px;
+}
+
+#level3message
+{
+	font-family:"Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size:14px;
+	text-align:justify;
 }
