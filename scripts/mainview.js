@@ -12,6 +12,9 @@ var codebase = null;
 
 var $j = jQuery.noConflict();
 var displayVisualisation = null;
+var recordStudentOpinion = null;
+var getMoreHelp = null;
+var currentUser = null;
 
 $j(document).ready
 (
@@ -19,7 +22,7 @@ $j(document).ready
 	{
 		//setup ajax
 		$j.ajaxSetup({cache: true});
-		
+/*		
 		//load facebook JS SDK
 		$j.getScript
 		(
@@ -54,7 +57,96 @@ $j(document).ready
 				);
 			}
 		);
+*/
+		var users = [];
+		users['user1'] = '123';
+		users['user2'] = '123';
+		users['user3'] = '123';
+		users['user4'] = '123';
+		users['user5'] = '123';
+		users['user6'] = '123';
+		users['user7'] = '123';
+		users['user8'] = '123';
+		users['user9'] = '123';
+		users['user10'] = '123';
 
+		$j("#loginIcon").click
+		(
+			function()
+			{
+				var answer = null;
+				
+				if(currentUser === null)
+				{
+					dialog.dialog("open");
+				}
+				else
+				{
+					answer = confirm('Would you like to logout?');
+					
+					if(answer === true)
+					{
+						currentUser = null;
+						$j("#fbUser").text('You are not logged in');
+					}
+				}
+			}		
+		);
+		
+		var cancel = function()
+		{
+			$j("input").val("");
+            dialog.dialog("close");
+        }
+
+        var submit = function()
+		{
+			var username = $j("input#username").val();
+			var password = $j("input#password").val();
+
+			if(users[username] === password)
+			{
+				currentUser = username;
+				$j("#fbUser").text('You are logged in as ' + username);
+				dialog.dialog("close");					
+			}
+			else
+			{
+				alert("incorrect password");
+			}
+        }
+
+		//set up dialog for displaying student's work
+		var dialog=$j("#dialog");
+		dialog.dialog
+		(
+			{
+				bgiframe: true,
+				autoOpen: false,
+				height: 250,
+				width: 400,
+				title: "Password",
+				show:
+				{
+					effect: "blind",
+					duration: 1000
+				},
+				hide:
+				{
+					effect: "explode",
+					duration: 1000
+				},
+				resizable: false,
+				modal: true,
+				closeOnEscape: true,
+				buttons:
+				{
+					"Submit": submit,
+					"Cancel": cancel
+				}
+			}
+		);
+		
 		function updateUserStatus(response)
 		{
 			var fbUser = $j("#fbUser");
@@ -104,6 +196,8 @@ $j(document).ready
 //		var workviewcontainer=$j("#workviewcontainer");
 //		var codeviewcontainer=$j("#codeviewcontainer");
 //		var outputviewcontainer=$j("#outputviewcontainer");
+		var editorview=$j("#editorview");
+		var editorcontainer=$j("#editor");
 		var outputview=$j("#outputview");
 		var output=$j("#output");
 		var canvas=$j("#canvas");
@@ -124,7 +218,7 @@ $j(document).ready
 			//var half=Math.floor(workviewcontainer.width()/2)-5;
 			//codeviewcontainer.width(half);
 			//outputviewcontainer.width(half);
-			
+		
 			cube.width(output.width());
 			cube.height(output.height());
 			graphics.resize(output.width(),output.height());
@@ -138,6 +232,9 @@ $j(document).ready
 			assessmentoutput.height(output.height());
 			miscoutput.width(output.width());
 			miscoutput.height(output.height());
+
+//var f = function(){outputview.accordion('option', 'active', 0);};
+//setTimeout(f, 1000);
 			//positionDockMenu();
 		}
 		
@@ -168,6 +265,10 @@ $j(document).ready
 					if(action.toLowerCase()==='execute')
 					{
 						execute();
+					}
+					else if(action.toLowerCase()==='debug')
+					{
+						displayDebug();
 					}
 					else if(action.toLowerCase()==='get help')
 					{
@@ -326,6 +427,8 @@ $j(document).ready
 			}
 		);
 
+		//codeview.accordion('option', 'active', 1);
+		
 		var outputview=$j("#outputview").accordion
 		(
 			{
@@ -334,6 +437,8 @@ $j(document).ready
 				icons: icons
 			}
 		);
+
+		//outputview.accordion('option', 'active', 1);
 		
 		$j("input:checkbox").trigger('change');
 		$j("select").trigger('change');
@@ -413,6 +518,12 @@ $j(document).ready
 				
 		function execute()
 		{
+			if(currentUser === null)
+			{
+				alert('Please login before you use the system');
+				return;
+			}
+			
 			var code=getCode();
 				
 			if(code==="")
@@ -421,41 +532,6 @@ $j(document).ready
 				return;
 			}
 
-			try
-			{
-				executeCode(code);
-			}
-			catch(e)
-			{
-				var arrayError = e.toString().split(':');
-				var errorType = arrayError[0];
-				var errorDescription = arrayError[1];
-
-				var html="";
-				html+="<table id='errorreport'>";
-				html+="<caption>Error Report: " + new Date().toLocaleString() + "</caption>";
-				html+="<tr>";
-				html+="<td>";
-				html+="<span>Error Type:</span>";
-				html+="</td>";
-				html+="<td>";
-				html+="<cite>" + errorType + "</cite>";
-				html+="</td>";
-				html+="</tr>";
-				html+="<tr>";
-				html+="<td>";
-				html+="<span>Error:</span>";
-				html+="</td>";
-				html+="<td class='evidence'>";
-				html+="<pre>" + errorDescription + "</pre>";
-				html+="</td>";
-				html+="</tr>";
-				html+="</table>";
-				debugoutput.html(html);
-				displayDebug();
-				return;
-			}
-			
 			if(code.match(/graphics\./)===null)
 			{
 				displayText();
@@ -464,6 +540,47 @@ $j(document).ready
 			{
 				displayGraphics();
 			}
+			
+			try
+			{
+				executeCode(code);
+			}
+			catch(e)
+			{
+				var html = prepareSyntaxErrorReport(e);
+				debugoutput.html(html);
+				displayDebug();
+				return;
+			}
+		}
+		
+		function prepareSyntaxErrorReport(e)
+		{
+			var arrayError = e.toString().split(':');
+			var errorType = arrayError[0];
+			var errorDescription = arrayError[1];
+
+			var html="";
+			html+="<table id='errorreport'>";
+			html+="<caption>Error Report: " + new Date().toLocaleString() + "</caption>";
+			html+="<tr>";
+			html+="<td>";
+			html+="<span>Error Type:</span>";
+			html+="</td>";
+			html+="<td>";
+			html+="<cite>" + errorType + "</cite>";
+			html+="</td>";
+			html+="</tr>";
+			html+="<tr>";
+			html+="<td>";
+			html+="<span>Error:</span>";
+			html+="</td>";
+			html+="<td class='evidence'>";
+			html+="<pre>" + errorDescription + "</pre>";
+			html+="</td>";
+			html+="</tr>";
+			html+="</table>";
+			return html;
 		}
 		
 		function analyseCode()
@@ -475,9 +592,54 @@ $j(document).ready
 				alert("There is no code to analyse.");
 				return;
 			}
+			
+			//insert code into the codebase
+			reasoner.updateCurrentCode();
+			
+/*			try
+			{
+				executeCode(code);
+			}
+			catch(e)
+			{
+				alert('There are syntax errors that need to be resolved!');
+				var html = prepareSyntaxErrorReport(e);
+				debugoutput.html(html);
+				displayDebug();
+				return;
+			}
+*/
+			var level2OK = getLevel2Data(code);
+			var debugreport = null;
+			var helpreport = null;
+			
+			if (level2OK === null)
+			{
+				console.log('The code cannot be analysed!, Operation stopped');
+				return;
+			}
+			else if (level2OK === false)
+			{
+				debugreport = reasoner.getDebugReport();
+				
+				if(debugreport !== '')
+				{
+					debugoutput.html(debugreport);
+				}
+				else
+				{
+					helpreport = reasoner.getHelpReport(0);
+					helpoutput.html(helpreport);
+				}
+				
+				console.log('The code has issues! debugging needed');
+				return;
+			}
+return;			
 
-			var level2OK = checkLevel2(code);
-			var level3OK = checkLevel3();
+			var level3OK = getLevel3Data();
+			
+			//var level3OK = checkLevel3();
 			
 			if(level2OK === false || level3OK === false)
 			{
@@ -494,9 +656,61 @@ $j(document).ready
 				displayGraphics();
 			}
 
-			executeCode(code);
+			//executeCode(code);
+		}
+		
+		//returns true:(code is fine), false:(code has issues), null:(code cannot be analysed)
+		function getLevel2Data(code)
+		{
+			var options = getJSLintOptions();
+			var success = null;
+
+			try
+			{
+				success = checkCode(code, options);
+			}
+			catch(e)
+			{
+				console.error(e);
+				return null;
+			}
+			
+			if(success === true)
+			{
+				return true;
+			}
+			
+			//feed the reasoner with the results
+			var data = JSLINT.data();
+			var errors = data.errors;
+			reasoner.setLevel2Feedback(errors);
+			
+			return false;
 		}
 
+		//returns true:(code is fine), false:(code has issues), null:(code cannot be analysed)
+		function getLevel3Data()
+		{
+			var problems = null;
+			
+			try
+			{
+				problems = reasoner.getSupport();
+			}
+			catch(e)
+			{
+				console.error(e);
+				return null;
+			}
+			
+			if(problems === false)
+			{
+				return true;
+			}
+			
+			return false;
+		}
+		
 		function checkLevel3()
 		{
 			if(reasoner.getSupport() === false)
@@ -598,6 +812,146 @@ $j(document).ready
 				);
 			} 
 		);
+
+		getMoreHelp = function(object, name, priority)
+		{
+/*
+			if(buttonPressed === 'no')
+			{
+				helpreport = reasoner.getHelpReport(priority);
+				
+				if(helpreport === '')
+				{
+					alert('No more help available');
+					
+					//flip cube and display text facet
+					displayText();
+					
+					return;
+				}
+				
+				helpoutput.html(helpreport);
+				return;
+			}
+*/			
+			var buttonPressed = object.value;
+			var helpreport = '';
+			var row = null;
+
+			if(buttonPressed === 'That is not enough. Tell me more.')
+			{
+
+				//get a reference to the enclosing <TR> element
+				var row = object.parentNode.parentNode;
+				
+				//get a reference to the documentation row
+				row = row.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling;
+				var done = false;
+
+				if(row.style.display === 'none')
+				{
+					displayRow(row);
+					reasoner.updateJournal(name, currentUser, 'fired', reasoner.currentCodeID, 2);
+					done = true;
+				}
+
+				//get a reference to the visualisation row
+				row = row.nextSibling;
+				
+				if(row.style.display === 'none' && done === false)
+				{
+					displayRow(row);
+					reasoner.updateJournal(name, currentUser, 'fired', reasoner.currentCodeID, 3);
+					done = true;
+				}
+
+				if(done === false)
+				{
+					alert('There is no more help on this issue.\nYou should call the tutor.');
+					return;
+				}
+
+				//get a reference to the hr and question row and display them
+				row = row.nextSibling;
+				displayRow(row);
+				row = row.nextSibling;
+				displayRow(row);
+
+				//get a reference to the hr and question row and hide them
+				row = row.nextSibling;
+				hideRow(row);
+				row = row.nextSibling;
+				hideRow(row);
+				row = row.nextSibling;
+				hideRow(row);
+			}
+			else
+			{
+				helpreport = reasoner.getHelpReport(priority);
+				
+				if(helpreport === '')
+				{
+					alert('No more help is available');
+					
+					//flip cube and display text facet
+					displayText();
+					
+					return;
+				}
+				
+				helpoutput.html(helpreport);
+			}
+		}
+		
+		recordStudentOpinion = function(object)
+		{
+			var buttonPressed = object.value.toLowerCase();
+			var helpreport = '';
+			
+			//go back to flip
+			if(buttonPressed === 'yes')
+			{
+				//flip cube and display text facet
+				displayText();
+				
+				return;
+			}
+			
+/*
+			if(buttonPressed === 'no')
+			{
+				helpreport = reasoner.getHelpReport(priority);
+				
+				if(helpreport === '')
+				{
+					alert('No more help available');
+					
+					//flip cube and display text facet
+					displayText();
+					
+					return;
+				}
+				
+				helpoutput.html(helpreport);
+				return;
+			}
+*/			
+			//get a reference to the enclosing <TR> element
+			var row = object.parentNode.parentNode;
+			
+			//hide the current row and the previous one (hr)
+			hideRow(row);
+			row = row.previousSibling;
+			hideRow(row);
+
+			//display hr and next question
+			row = row.nextSibling.nextSibling;
+			displayRow(row);
+			row = row.nextSibling;
+			displayRow(row);
+			row = row.nextSibling;
+			displayRow(row);
+		}
 		
 		function updateDockMenu(facetSelected)
 		{
@@ -605,9 +959,10 @@ $j(document).ready
 			window.setTimeout(function(){$j('div#dockmenu').jqdock('idle').jqdock('nudge');}, 600);
 		}
 
-		fixErrorLog();		
+		fixErrorLog();
 	}
 );
+
 
 function fixErrorLog()
 {

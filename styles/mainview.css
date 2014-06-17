@@ -1,5 +1,9 @@
 /* top view */
 
+.ui-widget-overlay {
+  background: #000;
+}
+
 b
 {
 	font-size: 32px;
@@ -372,6 +376,11 @@ input
 	font-family:"Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 	font-size:12px;
 	border-radius: 30px 30px 30px 30px;
+}
+
+#level3report input
+{
+	width:100%;
 }
 
 #level2report tr, #level3report tr, #errorreport tr

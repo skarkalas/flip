@@ -47,8 +47,9 @@
 	<div id="fbstatus">
 		<table>
 		<tr>
-			<td id="fbUser"></td>
+			<td id="fbUser">You are not logged in</td>
 			<td width='30%' align='right'>
+			<img id='loginIcon' src="./images/login.png" height='40px'></img>
 				<fb:login-button max_rows="1" size="small" show_faces="false" auto_logout_link="true"></fb:login-button>
 			</td>
 		</tr>
@@ -71,6 +72,7 @@
 			<h3>Menu</h3>
 			<ul id="menu" style='font-family:"Lucida Sans Unicode", "Lucida Grande", Sans-Serif;font-size:14px;'>
 			<li><a href="#"><span class="ui-icon ui-icon-play"></span>Execute</a></li>
+			<li><a href="#"><span class="ui-icon ui-icon-wrench"></span>Debug</a></li>
 			<li><a href="#"><span class="ui-icon ui-icon-lightbulb"></span>Get Help</a></li>
 			<li><a href="#"><span class="ui-icon ui-icon-check"></span>Assess</a></li>
 			<li><a href="#"><span class="ui-icon ui-icon-document-b"></span>Report</a></li>
@@ -646,6 +648,20 @@ alert(sum);
 </td>
 </tr>
 </table>
+
+<br/>
+
+	<div id="dialog">
+	<table>
+	<tr>
+	<td>Username:</td>
+	<td><input type="text" id="username"/></td>
+	</tr>
+	<tr>
+	<td>Password:</td>
+	<td><input type="password" id="password"/></td>
+	</tr>
+	</div>
 
 </body>
 </html>
