@@ -3,6 +3,7 @@ var editor=null;
 //change references to ace constructors
 var Search = ace.require('ace/search').Search;
 var Range = ace.require('ace/range').Range;
+//var HashHandler = ace.require('ace/keyboard/hash_handler').HashHandler
 
 var text=null;
 var graphics=null;
@@ -15,6 +16,8 @@ var displayVisualisation = null;
 var recordStudentOpinion = null;
 var getMoreHelp = null;
 var currentUser = null;
+var automaticSupport = null; 
+var stopDebugging = null;
 
 $j(document).ready
 (
@@ -69,7 +72,49 @@ $j(document).ready
 		users['user8'] = '123';
 		users['user9'] = '123';
 		users['user10'] = '123';
+		users['user100'] = '123';
 
+		function startSupport()
+		{
+			if(automaticSupport !== null)
+			{
+				return;
+			}
+			
+			automaticSupport = setTimeout(analyseCode, 3000);
+			console.log('support started');
+		}
+		
+		function setSYSMessage(message)
+		{	
+			$j('#sysMessage').text(message);
+		}
+
+		function restartSupport()
+		{
+			if(automaticSupport === null)
+			{
+				return;
+			}
+			
+			clearTimeout(automaticSupport);
+			automaticSupport = setTimeout(analyseCode, 3000);
+			console.log('support restarted');
+		}
+		
+		function stopSupport()
+		{
+			if(automaticSupport === null)
+			{
+				return;
+			}
+			
+			clearTimeout(automaticSupport);
+			automaticSupport = null;
+			setSYSMessage('');
+			console.log('support stopped');			
+		}
+		
 		$j("#loginIcon").click
 		(
 			function()
@@ -88,6 +133,13 @@ $j(document).ready
 					{
 						currentUser = null;
 						$j("#fbUser").text('You are not logged in');
+						
+						if(typeof sessionStorage !== "undefined")
+						{
+							sessionStorage.removeItem('currentUser');
+						}
+						
+						stopSupport();
 					}
 				}
 			}		
@@ -108,6 +160,14 @@ $j(document).ready
 			{
 				currentUser = username;
 				$j("#fbUser").text('You are logged in as ' + username);
+				
+				if(typeof sessionStorage !== "undefined")
+				{
+					sessionStorage.currentUser = username;
+				}
+				
+				startSupport();
+				
 				dialog.dialog("close");					
 			}
 			else
@@ -116,6 +176,31 @@ $j(document).ready
 			}
         }
 
+		//function to check for login status
+		function checkLoginStatus()
+		{
+			if(typeof sessionStorage === "undefined")
+			{
+				return;
+			}		
+
+			if(typeof sessionStorage.currentUser === "undefined")
+			{
+				return;
+			}
+
+			if(sessionStorage.currentUser === null)
+			{
+				return;
+			}
+			
+			currentUser = sessionStorage.currentUser;
+			$j("#fbUser").text('You are logged in as ' + currentUser);
+			startSupport();
+		}
+		
+		checkLoginStatus();
+		
 		//set up dialog for displaying student's work
 		var dialog=$j("#dialog");
 		dialog.dialog
@@ -186,6 +271,15 @@ $j(document).ready
 		editor=ace.edit("editor");
 		editor.setTheme("ace/theme/eclipse");
 		editor.getSession().setMode("ace/mode/javascript");
+		editor.getSession().on
+		(
+			'change',
+			function(e)
+			{
+				restartSupport();
+			}
+		); 
+		
 		journal = TAFFY();				//empty database for journal
 		codebase = TAFFY();				//empty database for code
 		reasoner = new RBReasoner();
@@ -260,19 +354,42 @@ $j(document).ready
 			{
 				select: function(event, ui)
 				{
+					if(currentUser === null)
+					{
+						alert('Please login before you use the system');
+						return;
+					}
+
+					//reset the automatic support
+					restartSupport();
+			
 					var action=ui.item.text();
 					
-					if(action.toLowerCase()==='execute')
+					if(action.toLowerCase()==='execute code')
 					{
 						execute();
 					}
-					else if(action.toLowerCase()==='debug')
-					{
+					else if(action.toLowerCase()==='syntax issues')
+					{						
+						if(debugoutput.html() === '')
+						{
+							alert('There is no info about syntax issues available');
+							return;
+						}
+						
 						displayDebug();
+						stopSupport();
 					}
 					else if(action.toLowerCase()==='get help')
 					{
-						analyseCode();
+						if(helpoutput.html() === '')
+						{
+							alert('There is no help available');
+							return;
+						}
+						
+						displayHelp();
+						stopSupport();
 					}
 					else if(action.toLowerCase()==='assess')
 					{
@@ -357,6 +474,18 @@ $j(document).ready
 		
 		displayVisualisation = visualise;
 		
+		stopDebugging = function()
+		{
+			//remove debug info
+			debugoutput.html('');
+		
+			//start automatic help
+			startSupport();
+		
+			//flip cube and display text facet
+			displayText();
+		}
+		
 		function displayGraphics()
 		{
 			graphics.clear();
@@ -423,7 +552,11 @@ $j(document).ready
 			{
 				heightStyle: "fill",
 				collapsible: false,
-				icons: icons
+				icons: icons,
+				beforeActivate: function(event, ui) 
+				{
+					restartSupport();
+				}
 			}
 		);
 
@@ -434,7 +567,11 @@ $j(document).ready
 			{
 				heightStyle: "fill",
 				collapsible: false,
-				icons: icons
+				icons: icons,
+				beforeActivate: function(event, ui) 
+				{
+					restartSupport();
+				}
 			}
 		);
 
@@ -518,12 +655,12 @@ $j(document).ready
 				
 		function execute()
 		{
-			if(currentUser === null)
+/*			if(currentUser === null)
 			{
 				alert('Please login before you use the system');
 				return;
 			}
-			
+*/			
 			var code=getCode();
 				
 			if(code==="")
@@ -582,33 +719,28 @@ $j(document).ready
 			html+="</table>";
 			return html;
 		}
-		
+			
 		function analyseCode()
 		{
+			//clear reasoner from previous results
+			reasoner.clearMemory();
+
+			//clear the output from previous analysis
+			debugoutput.html('');
+			helpoutput.html('');
+			
 			var code=getCode();
 				
 			if(code==="")
 			{
-				alert("There is no code to analyse.");
+				console.log("There is no code to analyse.");
+				restartSupport();
 				return;
 			}
 			
 			//insert code into the codebase
 			reasoner.updateCurrentCode();
-			
-/*			try
-			{
-				executeCode(code);
-			}
-			catch(e)
-			{
-				alert('There are syntax errors that need to be resolved!');
-				var html = prepareSyntaxErrorReport(e);
-				debugoutput.html(html);
-				displayDebug();
-				return;
-			}
-*/
+
 			var level2OK = getLevel2Data(code);
 			var debugreport = null;
 			var helpreport = null;
@@ -616,6 +748,7 @@ $j(document).ready
 			if (level2OK === null)
 			{
 				console.log('The code cannot be analysed!, Operation stopped');
+				restartSupport();
 				return;
 			}
 			else if (level2OK === false)
@@ -625,16 +758,27 @@ $j(document).ready
 				if(debugreport !== '')
 				{
 					debugoutput.html(debugreport);
+					setSYSMessage('Syntax issues info is available');
+					console.log('The code has syntax issues! debugging needed');
 				}
 				else
 				{
-					helpreport = reasoner.getHelpReport(0);
-					helpoutput.html(helpreport);
+					helpreport = reasoner.getHelpReport(0, 1, 'system');
+					
+					if(helpreport !== '')
+					{
+						helpoutput.html(helpreport);
+						setSYSMessage('Help is available');
+						console.log('There is help for the code!');
+					}			
 				}
 				
-				console.log('The code has issues! debugging needed');
+				restartSupport();
 				return;
 			}
+			
+			setSYSMessage('');
+			restartSupport();
 return;			
 
 			var level3OK = getLevel3Data();
@@ -647,6 +791,8 @@ return;
 				return;
 			}
 			
+			
+/*			
 			if(code.match(/graphics\./)===null)
 			{
 				displayText();
@@ -656,6 +802,21 @@ return;
 				displayGraphics();
 			}
 
+			
+			
+			try
+			{
+				executeCode(code);
+			}
+			catch(e)
+			{
+				alert('There are syntax errors that need to be resolved!');
+				var html = prepareSyntaxErrorReport(e);
+				debugoutput.html(html);
+				displayDebug();
+				return;
+			}
+*/			
 			//executeCode(code);
 		}
 		
@@ -807,40 +968,25 @@ return;
 					{
 						var facet=$j(this).attr('id');
 						facet=facet.substring(facet.indexOf('-'));
-						cubeChange('show'+facet);	
+						cubeChange('show'+facet);
+						restartSupport();
 					}
 				);
 			} 
 		);
 
 		getMoreHelp = function(object, name, priority)
-		{
-/*
-			if(buttonPressed === 'no')
-			{
-				helpreport = reasoner.getHelpReport(priority);
-				
-				if(helpreport === '')
-				{
-					alert('No more help available');
-					
-					//flip cube and display text facet
-					displayText();
-					
-					return;
-				}
-				
-				helpoutput.html(helpreport);
-				return;
-			}
-*/			
+		{	
+			var level = reasoner.getCurrentRuleLevel(name);
 			var buttonPressed = object.value;
 			var helpreport = '';
 			var row = null;
 
 			if(buttonPressed === 'That is not enough. Tell me more.')
 			{
-
+				//update the journal
+				reasoner.updateJournal(name, currentUser, 'more', reasoner.currentCodeID, level, 'user');
+			
 				//get a reference to the enclosing <TR> element
 				var row = object.parentNode.parentNode;
 				
@@ -851,7 +997,7 @@ return;
 				if(row.style.display === 'none')
 				{
 					displayRow(row);
-					reasoner.updateJournal(name, currentUser, 'fired', reasoner.currentCodeID, 2);
+					reasoner.updateJournal(name, currentUser, 'fired', reasoner.currentCodeID, 2, 'user');
 					done = true;
 				}
 
@@ -861,13 +1007,27 @@ return;
 				if(row.style.display === 'none' && done === false)
 				{
 					displayRow(row);
-					reasoner.updateJournal(name, currentUser, 'fired', reasoner.currentCodeID, 3);
+					reasoner.updateJournal(name, currentUser, 'fired', reasoner.currentCodeID, 3, 'user');
 					done = true;
 				}
 
 				if(done === false)
 				{
-					alert('There is no more help on this issue.\nYou should call the tutor.');
+					reasoner.updateJournal(name, currentUser, 'fired', reasoner.currentCodeID, 4, 'user');				
+					alert('I cannot provide more help on this issue.\nPlease call the tutor.');
+					
+					//update web db
+					updateWebDatabase();
+					
+					//remove help info
+					helpoutput.html('');
+				
+					//start automatic help
+					startSupport();
+				
+					//flip cube and display text facet
+					displayText();					
+					
 					return;
 				}
 
@@ -887,36 +1047,35 @@ return;
 			}
 			else
 			{
-				helpreport = reasoner.getHelpReport(priority);
+				//update the journal
+				reasoner.updateJournal(name, currentUser, 'other', reasoner.currentCodeID, level, 'user');
+
+				helpreport = reasoner.getHelpReport(priority, 1, 'user');
 				
 				if(helpreport === '')
 				{
-					alert('No more help is available');
+					alert('I am afraid there is no more help available.\n Please call the tutor.');
 					
+					//update web db
+					updateWebDatabase();
+					
+					//remove help info
+					helpoutput.html('');
+				
+					//start automatic help
+					startSupport();
+				
 					//flip cube and display text facet
 					displayText();
-					
+				
 					return;
 				}
 				
 				helpoutput.html(helpreport);
 			}
-		}
-		
-		recordStudentOpinion = function(object)
-		{
-			var buttonPressed = object.value.toLowerCase();
-			var helpreport = '';
 			
-			//go back to flip
-			if(buttonPressed === 'yes')
-			{
-				//flip cube and display text facet
-				displayText();
-				
-				return;
-			}
-			
+		console.table(reasoner.agenda().get());
+		console.table(journal().get());
 /*
 			if(buttonPressed === 'no')
 			{
@@ -936,6 +1095,48 @@ return;
 				return;
 			}
 */			
+		}
+		
+		function updateWebDatabase()
+		{
+			//update web service with data
+			
+			
+			//empty journal and code db
+			journal.remove();
+			codebase.remove();
+		}
+		
+		recordStudentOpinion = function(object, ruleName)
+		{
+			var level = reasoner.getCurrentRuleLevel(ruleName);
+			var buttonPressed = object.value.toLowerCase();
+			var helpreport = '';
+			
+			//go back to flip
+			if(buttonPressed === 'yes')
+			{
+				//update the journal
+				reasoner.updateJournal(ruleName, currentUser, 'yes', reasoner.currentCodeID, level, 'user');
+
+				//update web db
+				updateWebDatabase();
+				
+				//remove help info
+				helpoutput.html('');
+			
+				//start automatic help
+				startSupport();
+			
+				//flip cube and display text facet
+				displayText();
+				
+				return;
+			}
+
+			//update the journal
+			reasoner.updateJournal(ruleName, currentUser, 'no', reasoner.currentCodeID, level, 'user');
+
 			//get a reference to the enclosing <TR> element
 			var row = object.parentNode.parentNode;
 			
@@ -951,6 +1152,30 @@ return;
 			displayRow(row);
 			row = row.nextSibling;
 			displayRow(row);
+			
+		console.table(reasoner.agenda().get());
+		console.table(journal().get());
+
+
+/*
+			if(buttonPressed === 'no')
+			{
+				helpreport = reasoner.getHelpReport(priority);
+				
+				if(helpreport === '')
+				{
+					alert('No more help available');
+					
+					//flip cube and display text facet
+					displayText();
+					
+					return;
+				}
+				
+				helpoutput.html(helpreport);
+				return;
+			}
+*/					
 		}
 		
 		function updateDockMenu(facetSelected)
