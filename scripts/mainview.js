@@ -18,6 +18,7 @@ var getMoreHelp = null;
 var currentUser = null;
 var automaticSupport = null; 
 var stopDebugging = null;
+var codeVersion = Date.now();
 
 $j(document).ready
 (
@@ -276,6 +277,7 @@ $j(document).ready
 			'change',
 			function(e)
 			{
+				codeVersion = Date.now();
 				restartSupport();
 			}
 		); 
@@ -991,7 +993,7 @@ return;
 				var row = object.parentNode.parentNode;
 				
 				//get a reference to the documentation row
-				row = row.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling;
+				row = row.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling;
 				var done = false;
 
 				if(row.style.display === 'none')
@@ -1038,6 +1040,8 @@ return;
 				displayRow(row);
 
 				//get a reference to the hr and question row and hide them
+				row = row.nextSibling;
+				hideRow(row);
 				row = row.nextSibling;
 				hideRow(row);
 				row = row.nextSibling;
@@ -1103,8 +1107,8 @@ return;
 			
 			
 			//empty journal and code db
-			journal.remove();
-			codebase.remove();
+			journal().remove();
+			codebase().remove();
 		}
 		
 		recordStudentOpinion = function(object, ruleName)
@@ -1147,6 +1151,8 @@ return;
 
 			//display hr and next question
 			row = row.nextSibling.nextSibling;
+			displayRow(row);
+			row = row.nextSibling;
 			displayRow(row);
 			row = row.nextSibling;
 			displayRow(row);
