@@ -63,17 +63,32 @@ $j(document).ready
 		);
 */
 		var users = [];
-		users['user1'] = '123';
-		users['user2'] = '123';
-		users['user3'] = '123';
-		users['user4'] = '123';
-		users['user5'] = '123';
-		users['user6'] = '123';
-		users['user7'] = '123';
-		users['user8'] = '123';
-		users['user9'] = '123';
-		users['user10'] = '123';
-		users['user100'] = '123';
+		users['sokratis'] = 'javascript';
+		users['sergio'] = 'javascript';
+		users['yakov'] = 'javascript';
+		users['alessandro'] = 'javascript';
+		users['alex'] = 'javascript';
+		users['alice'] = 'javascript';
+		users['arron'] = 'javascript';
+		users['chris'] = 'javascript';
+		users['david'] = 'javascript';
+		users['esha'] = 'javascript';
+		users['felicity'] = 'javascript';
+		users['guilherme'] = 'javascript';
+		users['james'] = 'javascript';
+		users['jo'] = 'javascript';
+		users['keimi'] = 'javascript';
+		users['ludovic'] = 'javascript';
+		users['michaelb'] = 'javascript';
+		users['michaelg'] = 'javascript';
+		users['michelef'] = 'javascript';
+		users['mike'] = 'javascript';
+		users['olly'] = 'javascript';
+		users['pablo'] = 'javascript';
+		users['ryan'] = 'javascript';
+		users['shahin'] = 'javascript';
+		users['toby'] = 'javascript';
+		users['yakov'] = 'javascript';
 
 		function startSupport()
 		{
@@ -272,6 +287,8 @@ $j(document).ready
 		editor=ace.edit("editor");
 		editor.setTheme("ace/theme/eclipse");
 		editor.getSession().setMode("ace/mode/javascript");
+		//disable jshint for the current session
+		editor.getSession().setUseWorker(false);
 		editor.getSession().on
 		(
 			'change',
@@ -686,6 +703,7 @@ $j(document).ready
 			}
 			catch(e)
 			{
+				stopSupport();
 				var html = prepareSyntaxErrorReport(e);
 				debugoutput.html(html);
 				displayDebug();
@@ -701,7 +719,7 @@ $j(document).ready
 
 			var html="";
 			html+="<table id='errorreport'>";
-			html+="<caption>Error Report: " + new Date().toLocaleString() + "</caption>";
+			//html+="<caption>Error Report: " + new Date().toLocaleString() + "</caption>";
 			html+="<tr>";
 			html+="<td>";
 			html+="<span>Error Type:</span>";
@@ -718,6 +736,15 @@ $j(document).ready
 			html+="<pre>" + errorDescription + "</pre>";
 			html+="</td>";
 			html+="</tr>";
+			html+="<tr>";
+			html+="<td colspan='2'><hr/>";		
+			html+="</td>";
+			html+="</tr>";
+			html+="<tr>";
+			html+="<td colspan='2'>";		
+			html+="<input style='width:100%' type='button' value='Please press this button to continue.' onclick='stopDebugging();'/>";
+			html+="</td>";
+			html+="</tr>";			
 			html+="</table>";
 			return html;
 		}
@@ -1191,6 +1218,7 @@ return;
 		}
 
 		fixErrorLog();
+		loadDoc('main');
 	}
 );
 
@@ -1428,7 +1456,7 @@ function setReadOnly(control)
 
 function readDoc(misconceptionName)
 {
-	var url = 'https://dl.dropboxusercontent.com/u/15318052/LKLProjects/3DaysJSReference/' + misconceptionName + '.htm';
+	var url = 'https://dl.dropboxusercontent.com/u/15318052/LKLProjects/3DaysJSReference/docs/rules/' + misconceptionName + '.htm';
 	var menu = $j("#codeview");
 	
 	//if the documentation tab is not visible, display it
@@ -1444,3 +1472,19 @@ function readDoc(misconceptionName)
 		$j('#docRef').html(data);
 	});
 }
+
+function loadDoc(doc)
+{
+	if(doc === '')
+	{
+		return;
+	}
+	
+	var url = 'https://dl.dropboxusercontent.com/u/15318052/LKLProjects/3DaysJSReference/docs/' + doc + '.htm';
+	
+	$j.get(url, function (data)
+	{
+		$j('#docRef').html(data);
+	});
+}
+

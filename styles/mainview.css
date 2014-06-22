@@ -1,5 +1,11 @@
 /* top view */
 
+#treemenu li, section > img
+{
+	cursor: pointer;
+	cursor: hand;
+}
+
 td#sysMessage
 {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
@@ -495,18 +501,19 @@ input
 
 
 /* documentation */
-article
+
+article, section
 {
 	font-family:"Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 }
 
-article > p
+article > p, section > p, article * li, section * li
 {
 	font-size:14px;
 	text-align:justify;
 }
 
-article * img
+article * img, section * img
 {
 	display: block;
     margin: auto;
@@ -518,26 +525,47 @@ video
 	margin: 0 auto;
 }
 
-article > pre
+article > pre, section > pre
 {
 	background-color:#B5D692;
 }
 
-article * td
+article * td, section * td
 {
+	font-size:12px;
 	text-align:center;
-	background-color:#7FB644;
-	color:#FFFFFF;
+	background-color:#EBEBEB;
 }
 
-article * span
+article * span, section * span
 {
 	font-size:24px;
 }
 
-article * div
+article * div, section * div
 {
+	width: 100%;
+}
+
+header
+{
+	width: 100%;
+	text-align:center; 
+}
+
+section > header
+{
+	font-size:24px;
+	background-color:#448DAE;
+	color:#FFFFFF;	
+}
+
+article > header
+{
+
 	font-size:18px;
+	background-color:#7FB644;
+	color:#FFFFFF;	
 }
 
 #level3message
