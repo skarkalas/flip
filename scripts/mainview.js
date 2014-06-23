@@ -1131,7 +1131,67 @@ return;
 		function updateWebDatabase()
 		{
 			//update web service with data
+			var data = journal().get();
 			
+			var i = null;
+			
+			for(i = 0; i < data.length; i++)
+			{
+				$j.ajax
+				(
+					{
+						type: "POST",
+						url: "http://talos:8282/apex/flip_ws/flip/jentry/",
+						crossDomain: true,
+						headers:
+						{
+							'id': data[i].id,
+							'userid': data[i].userid,
+							'issuer': data[i].issuer,
+							'misconception': data[i].data.misconception,
+							'state': data[i].data.state,
+							'codeid': data[i].data.codeid,
+							'mlevel': data[i].data.level
+						},
+						success: function(resp)
+						{
+							console.log("journal db update - success");
+						},
+						error: function(e)
+						{
+							console.log("journal db update error: "+e);
+						}
+					}
+				);				
+			}
+			
+			data = codebase().get();
+
+			for(i = 0; i < data.length; i++)
+			{
+				$j.ajax
+				(
+					{
+						type: "POST",
+						url: "http://talos:8282/apex/flip_ws/flip/centry/",
+						crossDomain: true,
+						headers:
+						{
+							'userid': currentUser,
+							'codeid': data[i].id,
+							'code': encodeURI(data[i].code)
+						},
+						success: function(resp)
+						{
+							console.log("code db update - success");
+						},
+						error: function(e)
+						{
+							console.log("code db update error: "+e);
+						}
+					}
+				);				
+			}
 			
 			//empty journal and code db
 			journal().remove();
