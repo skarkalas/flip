@@ -1571,7 +1571,7 @@ function setReadOnly(control)
 
 function readDoc(misconceptionName)
 {
-	var url = 'https://dl.dropboxusercontent.com/u/15318052/LKLProjects/3DaysJSReference/docs/rules/' + misconceptionName + '.htm';
+	var url = './3DaysJSReference/docs/rules/' + misconceptionName + '.htm';
 	var menu = $j("#codeview");
 	
 	//if the documentation tab is not visible, display it
@@ -1595,7 +1595,7 @@ function loadDoc(doc)
 		return;
 	}
 	
-	var url = 'https://dl.dropboxusercontent.com/u/15318052/LKLProjects/3DaysJSReference/docs/' + doc + '.htm';
+	var url = './3DaysJSReference/docs/' + doc + '.htm';
 	
 	$j.get(url, function (data)
 	{
