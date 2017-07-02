@@ -17,11 +17,11 @@
 	<script type="text/javascript" charset="utf-8" src="./scripts/taffy.js"></script>
 	<script type="text/javascript" charset="utf-8" src="./scripts/jslint.js"></script> 
 	<script type="text/javascript" charset="utf-8" src="./scripts/aceeditor/ace.js"></script> 
-	<script type="text/javascript" charset="utf-8" src="./scripts/jquery.jqDock.min.js"></script>	
-	<script type="text/javascript" charset="utf-8" src="https://dl.dropboxusercontent.com/u/15318052/LKLProjects/3DaysJSDebugger/scripts/debugger.js"></script> 
-	<script type="text/javascript" charset="utf-8" src="https://dl.dropboxusercontent.com/u/15318052/LKLProjects/3DaysJSGraphics/scripts/graphics.js"></script> 
-	<script type="text/javascript" charset="utf-8" src="https://dl.dropboxusercontent.com/u/15318052/LKLProjects/3DaysJSText/scripts/text.js"></script> 
-	<script type="text/javascript" charset="utf-8" src="https://dl.dropboxusercontent.com/u/15318052/LKLProjects/3DaysJSRBReasoner/scripts/rbreasoner.js"></script> 
+	<script type="text/javascript" charset="utf-8" src="./scripts/jquery.jqdock.min.js"></script>	
+	<script type="text/javascript" charset="utf-8" src="./scripts/debugger.js"></script> 
+	<script type="text/javascript" charset="utf-8" src="./scripts/graphics.js"></script> 
+	<script type="text/javascript" charset="utf-8" src="./scripts/text.js"></script> 
+	<script type="text/javascript" charset="utf-8" src="./scripts/rbreasoner.js"></script> 
 	<script type="text/javascript" charset="utf-8" src="./scripts/mainview.js"></script> 
 </head>
   
@@ -74,6 +74,8 @@
 			<li><a href="#"><span class="ui-icon ui-icon-play"></span>Execute Code</a></li>
 			<li><a href="#"><span class="ui-icon ui-icon-wrench"></span>Syntax Issues</a></li>
 			<li><a href="#"><span class="ui-icon ui-icon-lightbulb"></span>Get Help</a></li>
+			<li><a href="#"><span class="ui-icon ui-icon-link"></span>Trace Code</a></li>
+			<li><a href="#"><span class="ui-icon ui-icon-trash"></span>Clear Output</a></li>
 <!--			<li><a href="#"><span class="ui-icon ui-icon-check"></span>Assess</a></li>
 			<li><a href="#"><span class="ui-icon ui-icon-document-b"></span>Report</a></li>
 			<li><a href="#"><span></span>Misc</a></li>
@@ -85,17 +87,7 @@
 		<div id="codeview">		
 			<h3>Editor</h3>
 			<div id="editorview">
-			<div id="editor">
-var x = [2,5,1,8,9];
-
-for (var i = 0; i <= 5; i++)
-{
- var sum = 0;
- sum += x[i];
-}
-
-alert(sum);
-			</div>
+			<div id="editor"></div>
 			</div>
 			<h3>Language Reference</h3>
 			<div id='docRef'>

@@ -89,6 +89,46 @@ $j(document).ready
 		users['shahin'] = 'javascript';
 		users['toby'] = 'javascript';
 		users['yakov'] = 'javascript';
+		users['user1'] = 'javascript';
+		users['user2'] = 'javascript';
+		users['user3'] = 'javascript';
+		users['user4'] = 'javascript';
+		users['user5'] = 'javascript';
+		users['user6'] = 'javascript';
+		users['user7'] = 'javascript';
+		users['user8'] = 'javascript';
+		users['user9'] = 'javascript';
+		users['user10'] = 'javascript';
+		users['user11'] = 'javascript';
+		users['user12'] = 'javascript';
+		users['user13'] = 'javascript';
+		users['user14'] = 'javascript';
+		users['user15'] = 'javascript';
+		users['user16'] = 'javascript';
+		users['user17'] = 'javascript';
+		users['user18'] = 'javascript';
+		users['user19'] = 'javascript';
+		users['user20'] = 'javascript';
+		users['user21'] = 'javascript';
+		users['user22'] = 'javascript';
+		users['user23'] = 'javascript';
+		users['user24'] = 'javascript';
+		users['user25'] = 'javascript';
+		users['user26'] = 'javascript';
+		users['user27'] = 'javascript';
+		users['user28'] = 'javascript';
+		users['user29'] = 'javascript';
+		users['user30'] = 'javascript';
+		users['user31'] = 'javascript';
+		users['user32'] = 'javascript';
+		users['user33'] = 'javascript';
+		users['user34'] = 'javascript';
+		users['user35'] = 'javascript';
+		users['user36'] = 'javascript';
+		users['user37'] = 'javascript';
+		users['user38'] = 'javascript';
+		users['user39'] = 'javascript';
+		users['user40'] = 'javascript';
 
 		function startSupport()
 		{
@@ -98,7 +138,7 @@ $j(document).ready
 			}
 			
 			automaticSupport = setTimeout(analyseCode, 3000);
-			console.log('support started');
+//			console.log('support started');
 		}
 		
 		function setSYSMessage(message)
@@ -115,7 +155,7 @@ $j(document).ready
 			
 			clearTimeout(automaticSupport);
 			automaticSupport = setTimeout(analyseCode, 3000);
-			console.log('support restarted');
+//			console.log('support restarted');
 		}
 		
 		function stopSupport()
@@ -128,7 +168,7 @@ $j(document).ready
 			clearTimeout(automaticSupport);
 			automaticSupport = null;
 			setSYSMessage('');
-			console.log('support stopped');			
+//			console.log('support stopped');			
 		}
 		
 		$j("#loginIcon").click
@@ -422,6 +462,14 @@ $j(document).ready
 					{
 						reportProblemInCode();
 					}
+					else if(action.toLowerCase()==='trace code')
+					{
+						visualise();
+					}
+					else if(action.toLowerCase()==='clear output')
+					{
+						eval('text.clear()');
+					}
 				}
 			}
 		);
@@ -458,7 +506,7 @@ $j(document).ready
 		function receiveMessage(event)
 		{
 			//if the origin of the message is not what is expected stop
-			if (event.origin === "http://medea:8888")
+			if (event.origin === "http://hansen.dcs.bbk.ac.uk:8080")
 			{
 				//get the message
 				var message = event.data;
@@ -466,11 +514,14 @@ $j(document).ready
 				//prepare the code
 				//var code = "var x=5;\nvar y=7;\nvar z=x+y;\nvar l=z;\nconsole.log(z);"
 				var code = getCode();
+				code = code.replace(/alert/g, "console.log");
+				code = code.replace(/text.write/g, "console.log");
+				code = code.replace(/text.printf/g, "console.log");
 
 				//if the message says that the service is available post a new message with the code
 				if(message === 'jtutor:ok')
 				{
-					popup.postMessage(code, "http://medea:8888");
+					popup.postMessage(code, "http://hansen.dcs.bbk.ac.uk:8080");
 				}
 			}
 		}
@@ -486,9 +537,9 @@ $j(document).ready
 				alert("There is no code to visualise.");
 				return;
 			}
-
+			
 			//create a popup window pointing at the service
-			popup = window.open('http://medea:8888', '_blank', 'resizable=no, left=0,top=0,width=' + screen.availWidth + ',height=' + screen.availHeight);
+			popup = window.open('http://hansen.dcs.bbk.ac.uk:8080', '_blank', 'resizable=no, left=0,top=0,width=' + screen.availWidth + ',height=' + screen.availHeight);
 		}
 		
 		displayVisualisation = visualise;
@@ -762,7 +813,7 @@ $j(document).ready
 				
 			if(code==="")
 			{
-				console.log("There is no code to analyse.");
+//				console.log("There is no code to analyse.");
 				restartSupport();
 				return;
 			}
@@ -776,7 +827,7 @@ $j(document).ready
 			
 			if (level2OK === null)
 			{
-				console.log('The code cannot be analysed!, Operation stopped');
+//				console.log('The code cannot be analysed!, Operation stopped');
 				restartSupport();
 				return;
 			}
@@ -788,7 +839,7 @@ $j(document).ready
 				{
 					debugoutput.html(debugreport);
 					setSYSMessage('Syntax issues info is available');
-					console.log('The code has syntax issues! debugging needed');
+//					console.log('The code has syntax issues! debugging needed');
 				}
 				else
 				{
@@ -798,7 +849,7 @@ $j(document).ready
 					{
 						helpoutput.html(helpreport);
 						setSYSMessage('Help is available');
-						console.log('There is help for the code!');
+//						console.log('There is help for the code!');
 					}			
 				}
 				
@@ -1105,8 +1156,8 @@ return;
 				helpoutput.html(helpreport);
 			}
 			
-		console.table(reasoner.agenda().get());
-		console.table(journal().get());
+//		console.table(reasoner.agenda().get());
+//		console.table(journal().get());
 /*
 			if(buttonPressed === 'no')
 			{
@@ -1141,7 +1192,9 @@ return;
 				(
 					{
 						type: "POST",
-						url: "http://talos:8282/apex/flip_ws/flip/jentry/",
+//						url: "http://talos.dcs.bbk.ac.uk:8282/apex/flip_ws/flip/jentry/",
+//						url: "http://delphi.dcs.bbk.ac.uk:8080/ords/italk2_ws1/flip/jentry/",
+						url: "http://www.dcs.bbk.ac.uk/ords/italk2_ws1/flip/jentry/",
 						crossDomain: true,
 						headers:
 						{
@@ -1173,7 +1226,9 @@ return;
 				(
 					{
 						type: "POST",
-						url: "http://talos:8282/apex/flip_ws/flip/centry/",
+//						url: "http://talos.dcs.bbk.ac.uk:8282/apex/flip_ws/flip/centry/",
+//						url: "http://delphi.dcs.bbk.ac.uk:8080/ords/italk2_ws1/flip/centry",
+						url: "http://www.dcs.bbk.ac.uk/ords/italk2_ws1/flip/centry",
 						crossDomain: true,
 						headers:
 						{
@@ -1246,8 +1301,8 @@ return;
 			row = row.nextSibling;
 			displayRow(row);
 			
-		console.table(reasoner.agenda().get());
-		console.table(journal().get());
+//		console.table(reasoner.agenda().get());
+//		console.table(journal().get());
 
 
 /*
