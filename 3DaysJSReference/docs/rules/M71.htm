@@ -1,0 +1,39 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		A variable is declared in a loop
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	Variables in JavaScript have function scope. Declaring a variable in a loop does not restrict its scope within
+	it. In that respect it is not a problem if the intention is to use its value after the loop. The following is 
+	permissible by the language but it is clearly incorrect:
+	</p>
+<pre>
+<code>
+var i;
+for (i = 0; i <= 5; i++)
+{
+ var sum = 0;
+ sum += x[i];
+}
+text.write(sum, '\n');
+</code>
+</pre>	
+	<p>
+	 The first problem is that this code is misleading and potentially dangerous. Even if the declaration is left
+	 uninitialised the code is problematic. It is much better to move the declaration before the loop.
+	</p>
+<pre>
+<code>
+var sum = 0;
+var i;
+for (i = 0; i <= 5; i++)
+{
+ sum += x[i];
+}
+text.write(sum, '\n');
+</code>
+</pre>	
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>

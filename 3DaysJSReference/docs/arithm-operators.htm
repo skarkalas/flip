@@ -1,0 +1,152 @@
+<section>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		Arithmetic
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>	
+	<article>
+		<header>
+			Subtraction
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		The subtraction operator (-) can be used either as a unary or a binary operator. In the latter case it negates its operand.
+		</p>
+		<p>
+		If one or both of the operands is not of type 'Number' then a sequence of implicit conversion rules are followed to facilitate the operation. These rules apply to both uses of the operator.
+		</p>
+		<p>
+		If the operand is of type 'Undefined' then the operation is not possible and the special value 'NaN' is returned. For example, the following would return 'NaN'.
+		</p>
+<pre>
+<code>
+var oper;	// 'undefined';
+-oper;		// NaN
+</code>
+</pre>		
+		<p>
+		If the operand is of type 'Null' then it is treated as the numeric value 0. For example, the following would return 0.
+		</p>
+<pre>
+<code>
+var oper = null;	// 'null';
+-oper;			// 0
+</code>
+</pre>
+		<p>
+		If the operand is of type 'Boolean' then it is treated as the numeric value 0 or 1 depending on whether it is 'false' or 'true' respectively. For example, the following would return -1.
+		</p>
+<pre>
+<code>
+var oper=true;		// true;
+-oper;			// -1
+</code>
+</pre>
+		<p>
+		If the operand is of type 'String' then the system attempts to convert it to a number. If it succeeds then the result is treated as if it is a number, otherwise the operation is not possible and the special value 'NaN' is returned. The following example shows both cases:
+		</p>
+<pre>
+<code>
+var oper = "10";	// "10"
+-oper;			// -10
+oper = "Alex";		// "Alex"
+-oper;			// NaN
+</code>
+</pre>
+		<p>
+		If the operand is of any other type then the system first converts it to a string and then attempts to convert it to a number. The same rule that applies to strings, apply to this case too. For example the following would return -10.
+		</p>
+<pre>
+<code>
+var oper=[];		// empty array
+oper[0]=10;		// first element=10
+-oper;			// -10
+</code>
+</pre>
+	</article>
+	<article>
+		<header>
+			Addition
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		The addition operator (+) can be used either as a unary or a binary operator. If the operands are non-numeric values then the same rules as above hold. There is one difference though. If both operands are strings, then arithmetic addition cannot be performed.
+		</p>	
+	</article>
+	<article>
+		<header>
+			Increment
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This operator (++) can be used only as unary operator and its operand should be of type Number. When this operator is applied on its operand it increments its value by one. The value that is returned depends on whether the operator is placed before or after the operand.
+		</p>
+		<p>
+		If the operator is placed before the operand the value of the operand gets incremented and the new value of the operand is returned. The following expression will return 10.
+		</p>
+<pre>
+<code>
+var num=9;
+++num;
+</code>
+</pre>
+		<p>
+		If the operator is placed after the operand the value of the operand gets incremented but the old value of the operand is returned. The following expression will return 9.
+		</p>
+<pre>
+<code>
+num++;
+</code>
+</pre>	
+	</article>	
+	<article>
+		<header>
+			Decrement
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This operator (--) is the opposite of increment.
+		</p>	
+	</article>	
+	<article>
+		<header>
+			Multiplication
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		The multiplication operator (*) is a binary operator and follows the same conversion rules as above.
+		</p>	
+	</article>
+	<article>
+		<header>
+			Division
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		The division operator (/) is a binary operator and follows the same conversion rules as above. If the value of the divisor is 0 then the value positive or negative infinity, depending on the value of the dividend, is returned.
+		</p>
+<pre>
+<code>
+var x = 5;
+x= x / 0;	//+Infinity
+x = -5;
+x = x / 0;	//-Infinity
+</code>
+</pre>
+	</article>
+	<article>
+		<header>
+			Modulus
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		The modulus operator (%) is a binary operator and returns the remainder of the integer division. If the value of the divisor is 0 then the special value 'NaN' is returned.
+		</p>
+<pre>
+<code>
+x = 5 % 0;	//NaN
+</code>
+</pre>		
+	</article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+</section>

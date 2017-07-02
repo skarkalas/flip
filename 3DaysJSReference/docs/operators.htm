@@ -1,0 +1,160 @@
+<section>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		Operators
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	In mathematics we use operators to perform operations on operands. The same concept is used in programming languages as well.
+	</p>
+	<article>
+		<header>
+			Precedence and Associativity
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		When more than one operator is used in an expression, there are certain rules than determine the order of evaluation. For example, when there is a multiplication and an addition combined in the same expression, the multiplication takes place before the addition. In this case we say that multiplication has a higher precedence than addition.
+		</p>	
+		<p>
+		For obvious reasons the concept of precedence is present in programming languages too. Programming languages define their own set of precedence rules that apply to their own operators.
+		</p>	
+		<p>
+		The following table lists the available operators in JavaScript in descending order of precedence:
+		</p>
+		<table align='center' style='width:90%'>
+		<caption>Precedence and Associativity Table</caption>
+		<tr>
+		<td>. field access</td><td>[] array indexing</td><td>() expression grouping</td>
+		</tr>
+		<tr>
+		<td>++</td><td>--</td><td>- unary minus</td><td>~</td><td>!</td><td>delete</td><td>new</td><td>typeof</td><td>void</td>
+		</tr>
+		<tr>
+		<td>*</td><td>/</td><td>%</td>
+		</tr>
+		<tr>
+		<td>+</td><td>-</td><td>+ string concatenation</td>
+		</tr>
+		<tr>
+		<td>&lt&lt</td><td>&gt&gt</td><td>&gt&gt&gt</td>
+		</tr>
+		<tr>
+		<td>&lt</td><td>&lt=</td><td>&gt</td><td>&gt=</td><td>instanceof</td>
+		</tr>
+		<tr>
+		<td>==</td><td>!=</td><td>===</td><td>!==</td>
+		</tr>
+		<tr>
+		<td>&</td>
+		</tr>
+		<tr>
+		<td>^</td>
+		</tr>
+		<tr>
+		<td>|</td>
+		</tr>
+		<tr>
+		<td>&&</td>
+		</tr>
+		<tr>
+		<td>||</td>
+		</tr>
+		<tr>
+		<td>?:</td>
+		</tr>
+		<tr>
+		<td>=</td><td>+= compound assignment</td><td>-=</td><td>*=</td><td>/=</td><td>%=</td>
+		</tr>
+		<tr>
+		<td>,</td>
+		</tr>
+		</table>
+		<br/>		
+		<p>
+		A few examples will clarify the operator precedence rules enforced by JavaScript.
+		</p>		
+<pre>
+<code>
+5+8*2;		// 21
+6/2-3;		// 0
+0>0 == false;	// true
+</code>
+</pre>
+		<p>
+		Precedence rules alone cannot cover all the possible problems that may arise in this area. As you can see in the above table there are different operators that have been given the same level of precedence. So the question is what happens if an operator is combined with itself or another operator that has the same level of precedence within the same expression? In this case a rule that determines how these operators associate with each other is needed. This is an associativity rule. The following examples demonstrate the application of this rule:
+		</p>
+<pre>
+<code>
+9/3/3;		// (left to right) 1
+1==2==2;	// (left to right) false
+15/3*5;		// (left to right) 25
+x = y = 3;	// (right to left) 3
+x = 2, 4, 7;	// (left to right) 7
+</code>
+</pre>
+		<p>
+		In JavaScript when two or more operators with the same level of precedence are present in the same expression then they are evaluated from left to right. The only operator that breaks the rule is the assignment.
+		</p>
+		<p>
+		If for some reason the order of evaluation in an expression needs to be altered or controlled, then parentheses can be used. The rule is that anything within parentheses is evaluated first.
+		</p>
+		<p>
+		Programmers are encouraged to use parentheses in expressions, because they provide clarity. Of course, as with everything, parentheses should be used with caution since extensive use of them may have the opposite effect.
+		</p>		
+		<p>
+		The following expressions are equivalent to the ones given above:
+		</p>
+<pre>
+<code>
+(9/3)/3;	// 1
+(1==2)==2;	// false
+(15/3)*5;	// 25
+</code>
+</pre>
+	</article>
+	<article>
+		<header>
+			Lazy Evaluation
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		When an expression gets evaluated it may be possible to determine the result before the final operations are performed. In this case JavaScript does not perform these operations. This is called lazy evaluation. The following example demonstrates the concept:
+		</p>	
+<pre>
+<code>
+3 > 2 || 5 < 2		//true
+</code>
+</pre>
+		<p>
+		In the example above only the first operation takes place <code>(3 > 2)</code> because it is enough to provide a definitive answer.
+		</p>	
+		<p>
+		If one of the operands in a logical operation is not a boolean value then strangely enough JavaScript returns this one. This is a feature that should be avoided because it can lead to untraceable bugs in the code.
+		</p>
+<pre>
+<code>
+3 > 2 || 'test'	//true – 'test' does not get evaluated
+3 > 2 && 'test'	//'test' – 'test' does get evaluated and returned
+</code>
+</pre>
+		<p>
+		JavaScript programmers use this feature to initialise variables like in the following example:
+		</p>
+<pre>
+<code>
+var x = x || 50;
+</code>
+</pre>
+		<p>
+		If <code>x</code> is undefined then the right operand gets evaluated and returned as the value to be assigned to <code>x</code>. This is dangerous and should be avoided. If <code>x</code> is defined then it is possible that this expression will not work as expected. The following code fragment illustrates the issue:
+		</p>
+<pre>
+<code>
+var x = 1 / 0;
+var x = x || 50;
+alert(x);			//Infinite
+</code>
+</pre>
+	</article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</section>

@@ -1,0 +1,99 @@
+<section>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		Logical Operators
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	These operators ideally operate on Boolean values and they also return a Boolean value. It is possible to operate on other types and use their Boolean equivalent after the conversion.
+	</p>
+	<p>
+	The available operators follow:
+	</p>	
+<pre>
+<code>
+not	!
+and	&&
+or	||
+</code>
+</pre>
+	<article>
+		<header>
+			Not
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		The not operator is unary whereas the other two are binary. Not negates the truth-value of its operand.
+		</p>	
+		<table align='center' style='width:60%'>
+		<caption>Truth Table</caption>
+		<tr>
+		<td style='width:50%'>X</td><td style='width:50%'>!X</td>
+		</tr>
+		<tr>
+		<td>true</td><td>false</td>
+		</tr>
+		<tr>
+		<td>false</td><td>true</td>
+		</tr>
+		</table>
+		<br/>
+	</article>
+	<article>
+		<header>
+			And
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		The only case in which this operator returns true is when both of its operands are evaluated to true. If either (or both) of them is false then it returns false.
+		</p>	
+		<table align='center' style='width:60%'>
+		<caption>Truth Table</caption>
+		<tr>
+		<td style='width:33%'>A</td><td style='width:33%'>B</td><td>A && B</td>
+		</tr>
+		<tr>
+		<td>false</td><td>false</td><td>false</td>
+		</tr>
+		<tr>
+		<td>false</td><td>true</td><td>false</td>
+		</tr>
+		<tr>
+		<td>true</td><td>false</td><td>false</td>
+		</tr>
+		<tr>
+		<td>true</td><td>true</td><td>true</td>
+		</tr>
+		</table>
+		<br/>
+	</article>
+	<article>
+		<header>
+			Or
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		The only case in which this operand returns false is when both of its operands are evaluated to false. If either (or both) of them is true then it returns true.
+		</p>	
+		<table align='center' style='width:60%'>
+		<caption>Truth Table</caption>
+		<tr>
+		<td style='width:33%'>A</td><td style='width:33%'>B</td><td>A || B</td>
+		</tr>
+		<tr>
+		<td>false</td><td>false</td><td>false</td>
+		</tr>
+		<tr>
+		<td>false</td><td>true</td><td>true</td>
+		</tr>
+		<tr>
+		<td>true</td><td>false</td><td>true</td>
+		</tr>
+		<tr>
+		<td>true</td><td>true</td><td>true</td>
+		</tr>
+		</table>
+		<br/>
+	</article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</section>

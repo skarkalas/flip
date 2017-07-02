@@ -1,0 +1,184 @@
+<section>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		Variables, Input/Output
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<article>
+		<header>
+			What is a variable?
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		A variable is a location in the computer's memory that is used by the program to store information temporarily. This information may not be known to the programmer when the code is written. It is also possible that the information becomes available during the program execution and the program cannot immediately use it. Therefore, it must be temporarily stored somewhere so that it can be used at a later stage.
+		</p>
+		<p>
+		Variables are given distinct names called identifiers so that they can be referenced at a later time. When a variable is referenced for the first time the identifier must be preceded by the word <code>var</code>. This is called the declaration of the variable. The following statement declares a variable named </code>x</code> and assigns the value 4 to it.
+		</p>
+<pre>
+<code>
+var x = 4;
+</code>
+</pre>
+		<p>
+		It is not mandatory to provide an initial value for a variable but it is a good practice to do so. This action is called initialisation.
+		</p>
+	</article>
+	<article>
+		<header>
+			What names can I use for an identifier?
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		There are certain rules that need to be used for naming variables. These rules follow:
+		</p>
+		<ul>
+			<li>The first letter of the identifier must be either an underscore (_) or a dollar sign ($) or any letter of the English alphabet (either lowercase or uppercase).</li>
+			<li>For the rest of the identifier, apart from letters, dollars and underscores, numbers can be used.</li>
+			<li>The identifier must not be a JavaScript 'reserved word'. In other words it must not belong to the JavaScript language vocabulary.</li>
+		</ul>
+	</article>
+	<article>
+		<header>
+			JavaScript reserved words
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<table align='center'>
+		<tr>
+		<td style='width:20%'>break</td><td style='width:20%'>case</td><td style='width:20%'>catch</td><td style='width:20%'>continue</td><td>debugger</td>
+		</tr>
+		<tr>
+		<td>default</td><td>delete</td><td>do</td><td>else</td><td>finally</td>
+		</tr>
+		<tr>
+		<td>for</td><td>function</td><td>if</td><td>in</td><td>instanceof</td>
+		</tr>
+		<tr>
+		<td>new</td><td>return</td><td>switch</td><td>this</td><td>throw</td>
+		</tr>
+		<tr>
+		<td>try</td><td>typeof</td><td>var</td><td>void</td><td>while</td>
+		</tr>
+		<tr>
+		<td>with</td><td>true</td><td>false</td><td>null</td><td>undefined</td>
+		</tr>
+		</table>
+		<br/>
+	</article>	
+	<article>
+		<header>
+			Case Sensitivity
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		JavaScript is a case-sensitive language. If the name is given in capital letters, then it has be referenced exactly as it is declared. If the case is changed then it is assumed that this is a different identifier.
+		</p>
+	</article>		
+	<article>
+		<header>
+			What is a statement?
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		A statement corresponds to a unit of work that needs to be done by the computer. JavaScript code is a sequence of statements. The character that terminates a JavaScript statement is the semicolon. The following code comprises two statements:
+		</p>
+<pre>
+<code>
+var x = 4;
+var y = x + 4;
+</code>
+</pre>		
+	</article>		
+	<article>
+		<header>
+			What is a literal?
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		A piece of information that is not retrieved from a variable or computed (on the fly) by the computer but rather it is hard-coded by the programmer in the program code is called a 'literal'. The following are examples of literals:
+		</p>
+<pre>
+<code>
+"Spiderman"
+1998
+</code>
+</pre>
+	</article>
+	<article>
+		<header>
+			What is an expression?
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		An expression is a part of a statement that can be evaluated by the computer and generate a value. In the following example we create a variable named 'result' and we initialise it with the result of the evaluation of the expression that follows.
+		</p>
+<pre>
+<code>
+var result = 3 + 4;
+</code>
+</pre>
+		<p>
+		The expression in this case is <code>3 + 4</code> and the actual value that the variable is assigned is 7.
+		</p>	
+	</article>
+	<article>
+		<header>
+			Input / Output
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		Usually these two words refer to the mechanism through which a user can interact with a computer system. JavaScript does not natively support I/O. In other words there are no language constructs that can be used to instruct the computer to communicate information to the user and vice-versa. It is always expected that there is I/O functionality provided by the host environment. Web browsers provide a set of standard processes that can be used for basic I/O. These processes reveal themselves as modal windows that block the execution flow of the program and prevent the user from accessing the rest of the interface.
+		</p>
+	</article>
+	<article>
+		<header>
+			Display a Message (browser)
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		The <code>alert</code> function can be used to display messages if there is no requirement for a response on the part of the user. This function receives an optional message as a parameter (within the brackets).
+		</p>
+<pre>
+<code>
+var message = 'hello world';
+alert(message);
+</code>
+</pre>		
+	</article>
+	<article>
+		<header>
+			Display a Message and ask for Approval (browser)
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		The <code>confirm</code> function can be thought of as a specialisation of alert. The difference is that it shows two buttons and asks for user confirmation. The value that is returned indicates whether the user pressed OK or cancel.
+		</p>
+<pre>
+<code>
+var message = 'can I format your HDD?';
+var response = confirm(message);
+alert(response);
+</code>
+</pre>				
+	</article>
+	<article>
+		<header>
+			Prompt the user to input a value (browser)
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		The <code>prompt</code> function can be used to ask for user input and receives two optional parameters. The first one is a message that can be presented to the user and the second is a default value that is displayed in the field provided for user input.
+		</p>
+<pre>
+<code>
+var message = 'how old are you?';
+var defaultValue = 'type your age';
+var response = prompt(message, defaultValue);
+message = 'are you really that old?';
+response = confirm(message);
+alert(response);
+</code>
+</pre>				
+	</article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</section>

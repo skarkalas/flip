@@ -1,0 +1,145 @@
+<section>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		Primitive Data Types
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<article>
+		<header>
+			Number
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		The Number data type represents a numeric value. This numeric value can be an integer or a floating-point number. JavaScript makes no distinction between the two. If it is an integer, it is possible to be represented in decimal, octal or hexadecimal system. If it is a floating-point value only decimal representation is possible, but the value can be also expressed in scientific notation. The following are example literals of that type:
+		</p>
+<pre>
+<code>
+-10		//negative integer in decimal
+156		//positive integer in decimal
+0.001 		//positive floating-point in decimal
+-0.5 		//negative floating-point in decimal
+078 		//positive integer in decimal
+077		//positive integer in octal
+0xf		//positive integer in hexadecimal
+0XF		//positive integer in hexadecimal
+23.58e-2 //positive floating-point in scientific notation
+</code>
+</pre>
+		<p>
+		Note: A 0 prefix denotes a number in octal. If a digit that is not permissible in octal is present then the number is considered decimal. A 0x prefix denotes a number in hexadecimal. E+ moves the decimal point to the right and e- does the opposite.
+		</p>
+		<p>
+		Apart from the above, there are five more possible values of type Number in JavaScript:
+		</p>
+		<ul>
+			<li>NaN. NaN stands for 'Not a Number' and is a special value that is used by JavaScript to indicate that a not permissible mathematical operation took place and the result (NaN) has been placed in a variable of type Number.</li>
+			<li>Positive Infinity. This is again a special value used to indicate that the value of a positive Number variable is too large to be represented in JavaScript.</li>
+			<li>Negative Infinity. This is the opposite of positive infinity.</li>
+			<li>Positive and Negative 0.</li>
+		</ul>			
+		<p>
+		There is a method that can be used to return a textual representation of the primitive value that is held in a variable. In the case of numbers it can also be used to convert the value to a different radix. The following example shows how we can display the decimal number 123 as hexadecimal.
+		</p>		
+<pre>
+<code>
+var num = 123;
+var text = num.toString(16);
+alert(text);
+</code>
+</pre>			
+	</article>
+	<article>
+		<header>
+			String
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		The String data type represents text. A piece of text can be any combination of digits, punctuation marks and characters of any alphabet. String literals must be enclosed within double or single quotation marks. The following are examples that type:
+		</p>
+<pre>
+<code>
+"My name is Hannibal"
+'My name is Hannibal'
+'125' 	//this is not the same as number 125
+"" 	//an empty string
+</code>
+</pre>
+		<p>
+		If we want double quotation marks to be part of the text then we put them in the text in the normal way and we enclose the whole thing within single quotation marks (or vice versa). The following examples demonstrate that:
+		</p>
+<pre>
+<code>
+"I like my brother's car"
+'This is not a "decent" car'
+</code>
+</pre>		
+		<p>
+		Strings with a special meaning
+		</p>
+<pre>
+<code>
+\	escape
+\n	end of line
+\r	carriage return
+\t	tab
+\u	Unicode
+\'	single quotation mark
+\"	double quotation mark
+</code>
+</pre>		
+		<p>
+		The escape character is special because it is used to 'escape' the rest of the characters in the above list. If one of these characters is escaped then it has a special meaning in the text. End of line and carriage return can be used to instruct the system to go to the next line. Tab inserts a tab and unicode can be used to insert any character that belongs to the Unicode standard. If the escape character needs to be used as part of the string then it can be escaped by itself. The following examples are illustrative:
+		</p>
+<pre>
+<code>
+var s = 'This is my brother\'s car';
+var s = "This is my brother\"s car";
+var s = 'This \\ is the escape character';
+var s = 'I won 1 million \u0024'; //I won 1 million $
+</code>
+</pre>		
+	</article>
+	<article>
+		<header>
+			Boolean
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		In mathematics a logical statement can be either true or false. The same concept is also used in programming languages. That means that is it possible for expressions written in a programming language to be evaluated and return a truth-value. The literals used to represent the binary state of a Boolean value are 'true' and 'false' (without the quotes). The following example expressions return a Boolean value:
+		</p>
+<pre>
+<code>
+4 < 3		//returns false
+true		//literal of Boolean type
+</code>
+</pre>
+	</article>
+	<article>
+		<header>
+			Undefined
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		The Undefined data type conceptually represents something that either does not exist or it exists but we don't know what type of thing it is. The only one literal that can be used for this data type is 'undefined' (without the quotes). The reason that this type exists in JavaScript is that the language is dynamically typed. If a value is not given to a variable then there is no way for the system to determine its type. Therefore, we need a type that represents exactly that: the lack of a specific type.
+		</p>
+		<p>
+		When we declare a variable in a program, the computer reserves automatically all the memory space that is necessary for the variable to exist and serve its purpose. If we initialise the variable explicitly, then a specific value is placed into this memory location overwriting any other information residing in it and determining its type. But what happens if the variable is left uninitialised? The system will not be able to determine the amount of memory space needed for a value and consequently the respective type. If the system doesn't automatically place a 'default' value in the variable, then the variable will be left type-less. Even if the system decides to allocate an arbitrary amount of memory, this memory will not contain a usable value. This value can then be accidentally used by the program and generate unpredictable and therefore undesirable results.
+		</p>		
+		<p>
+		In order to prevent this unfortunate consequence from happening a default initialisation value is used in JavaScript. This is the value 'undefined'. That means that since this default initialisation value gets implicitly assigned by the system to any uninitialised variable, it is less likely for the above situation to happen in a JavaScript program. So the value 'undefined' in this case represents something that exists but we don't know what type of thing it is and therefore we shouldn't use it until we replace it with a usable value.
+		</p>		
+		<p>
+		Another use of this type is to represent non-existent variables. If the code refers to such a variable the value 'undefined' is returned.
+		</p>		
+	</article>
+	<article>
+		<header>
+			Null
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		The Null data type represents 'empty'. The only literal associated with this data type in JavaScript is 'null' (without the quotes). When the value 'null' is assigned to a variable then the variable is automatically considered of type Null. In JavaScript the literal 'null' is used either to initialise variables to 'empty' or to erase the contents of already existing variables without removing the variables themselves.
+		</p>		
+	</article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</section>

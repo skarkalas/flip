@@ -1,0 +1,27 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		An attempt to use a reserved word as a variable identifier occurred
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	Reserved words cannot be used as variable identifiers. The following is not valid:
+	</p>
+<pre>
+<code>
+var for = 10;
+</code>
+</pre>
+	<p>
+	The only way to overcome this issue is to define object properties as strings (quoted values).
+	</p>
+<pre>
+<code>
+var x = 
+{
+    "for" : 10
+};
+</code>
+</pre>	
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>

@@ -1,0 +1,29 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		A variable is used before its declaration 
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	Technically it is not a problem to refer to a variable before its declaration. The variable exists anyway within
+	its scope (global or function) and before its declaration contains the value 'undefined'. The following is not
+	invalid:
+	</p>
+<pre>
+<code>
+x = 10;
+var x = 5;
+</code>
+</pre>	
+	<p>
+	 However, it is not a good practice to write code like the above. It is potentially dangerous because the first
+	 reference might not be an assignment operation. You should always declare the variable first and then use it.
+	</p>
+<pre>
+<code>
+var x = 5;
+x = 10;
+</code>
+</pre>	
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>

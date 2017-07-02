@@ -1,0 +1,34 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		Wrong comparison with NaN
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	NaN is a special value of type Number that has a unique characteristic: it is not equal to anything, including
+	itself. That implies that it is meaningless to be used in comparison operations. The following code is valid
+	but meaningless (the condition evaluates always false):
+	</p>
+<pre>
+<code>
+var x = parseInt("test", 10);
+if (x === NaN)
+{
+    x = 10;
+}
+</code>
+</pre>
+	<p>
+	This problem can be fixed by using the function isNaN() instead.
+	</p>
+<pre>
+<code>
+var x = parseInt("test", 10);
+if (isNaN(x))
+{
+    x = 10;
+}
+</code>
+</pre>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>

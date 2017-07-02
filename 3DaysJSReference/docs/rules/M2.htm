@@ -1,0 +1,53 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		A name is used both as an identifier and a label
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	There is a name in the code that is used both as a variable identifier and a label. 
+	</p>
+<pre>
+<code>
+var x = 7;		//identifier
+
+function f()
+{
+    x:			//label
+
+    while(x > 0)	//identifier
+    {
+        x--;		//identifier
+        if(x === 5)	//identifier
+        {
+            break x;	//label
+        }
+    }
+}
+</code>
+</pre>	
+	<p>
+	In terms of syntax there is no problem as there is no name clash. Labels exist in a completely
+	separate namespace. The problem is readability and clarity of code. The solution is to rename one of the two.
+	</p>
+<pre>
+<code>
+var x = 7;		//identifier
+
+function f()
+{
+    y:			//label
+
+    while(x > 0))	//identifier
+    {
+        x--;		//identifier
+        if(x === 5)	//identifier
+        {
+            break y;	//label
+        }
+    }
+}
+</code>
+</pre>	
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>

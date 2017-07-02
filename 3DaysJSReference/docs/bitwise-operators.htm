@@ -1,0 +1,88 @@
+<section>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		Bitwise Operators
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	These operators operate on numeric operands. In a bitwise operation the operands are treated as signed 32-bit integers in big-endian order and in two’s complement format. The operation takes sequences of 32 bits and returns a normal numerical value.
+	</p>
+	<p>
+	The available operators follow:
+	</p>	
+<pre>
+<code>
+And			&
+Or			|
+Xor			^
+Not			~
+Left shift		<<
+Right shift		>>
+Zero-fill right shift	>>>
+</code>
+</pre>
+	<article>
+		<header>
+			And
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This is a binary operator. It compares the operands bit by bit and returns 1 for each pair where both values are equal to 1.
+		</p>
+	</article>
+	<article>
+		<header>
+			Or
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This is a binary operator. It compares the operands bit by bit and returns 1 for each pair where either or both values are equal to 1.
+		</p>
+	</article>
+	<article>
+		<header>
+			Xor
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This is a binary operator. It compares the operands bit by bit and returns 1 for each pair where either but not both values are equal to 1.
+		</p>
+	</article>
+	<article>
+		<header>
+			Not
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This is a unary operator. It inverts all the bits of the operand.
+		</p>
+	</article>	
+	<article>
+		<header>
+			Shift left
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This is a binary operator. The right operand is treated as a binary value. It shifts the bits of its left operand to the left for as many places as given in the right operand. The bits shifted off at the leftmost side are discarded and zeroes are shifted in from the right.
+		</p>
+	</article>
+	<article>
+		<header>
+			Shift right
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This is the opposite of the previous operation. It shifts the bits of its left operand to the right for as many places as given in the right operand. The bits shifted off at the rightmost side are discarded. This operation preserves the sign because it keeps the most significant bit unchanged.
+		</p>
+	</article>
+	<article>
+		<header>
+			Zero-fill shift right
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This is the same operation as the previous one. The difference is that it does not preserve the sign as it shifts in zeroes from the left.
+		</p>
+	</article>	
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</section>

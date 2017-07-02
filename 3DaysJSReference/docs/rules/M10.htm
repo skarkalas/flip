@@ -1,0 +1,36 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		An invalid assignment operation occurred 
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	You are trying to assign a value to something that cannot be assigned a value.
+	</p>
+<pre>
+<code>
+function f()
+{
+    return null;
+}
+
+f() = 1;		//problem
+2 = 1;			//problem
+</code>
+</pre>	
+	<p>
+	 Only variables can be assigned values. Function call expressions or literal values cannot be assigned other
+	 values.
+	</p>
+<pre>
+<code>
+function f()
+{
+    return null;
+}
+
+f();
+</code>
+</pre>	
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>

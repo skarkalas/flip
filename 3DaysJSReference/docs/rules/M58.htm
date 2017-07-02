@@ -1,0 +1,44 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		Unnecessary use of 'else'
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	The following code is valid and works as expected:
+	</p>
+<pre>
+<code>
+function f(a)
+{
+    if(a < 5)
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
+}
+</code>
+</pre>
+	<p>
+	The only problem is that the use of else is pointless since there is a return statement in the preceding block.
+	If the condition is evaluated to true, the function returns and there is no chance to execute the alternative case
+	anyway. The following is better:
+	</p>
+<pre>
+<code>
+function f(a)
+{
+    if(a < 5)
+    {
+        return 0;
+    }
+
+    return 1;
+}
+</code>
+</pre>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>

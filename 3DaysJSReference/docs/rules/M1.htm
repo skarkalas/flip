@@ -1,0 +1,51 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		Variable Redeclaration
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	There is a variable that has been declared multiple times within a function. The same variable identifier has been used
+	in many declarations.
+	</p>
+<pre>
+<code>
+function f()
+{
+	var x = 4;
+	var x = 6;	
+}
+
+function f()
+{
+	var x = 4, x = 6;	
+}	
+</code>
+</pre>	
+	<p>
+	The problem in this case is that you intended to declare two variables instead of one. The system, though, creates
+	only one and assigns two values to it. The value of the final assignment is retained. You can fix the problem by
+	renaming one of the variables.
+	</p>
+<pre>
+<code>
+function f()
+{
+	var x = 4, y = 6;	
+}	
+</code>
+</pre>	
+	<p>
+	If the intention is to simply assign a new value to the same variable then use a semicolon to create two statements (second case).	
+	</p>
+<pre>
+<code>	
+function f()
+{
+	var x = 4;
+	y = 6;	
+}	
+</code>
+</pre>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>

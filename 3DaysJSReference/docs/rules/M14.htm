@@ -1,0 +1,55 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		An unnecessary or invalid call to a constructor occurred 
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	Case 1: Creating objects of type String, Number or Boolean may not be forbidden but it is definitely bad practice.
+	The following code works fine:
+	</p>
+<pre>
+<code>
+var str = new String("test");
+var num = new Number(10);
+var bool = new Boolean(false);
+</code>
+</pre>	
+	<p>
+	 The problem is that the resulting values correspond to objects and not literal values. That can be problematic
+	 if these values need to be (strictly) compared with other values. Therefore, it is much better (and safer) to use
+	 the following equivalent statements instead:
+	</p>
+<pre>
+<code>
+var str = "test";
+var num = 10;
+var bool = false;
+</code>
+</pre>	
+	<p>
+	 In this case strict equality works fine and all the 'object' functionality is still available.
+	</p>
+	<p>
+	 If the intention is to use these constructors as conversion methods then they should be used without the new
+	 operator.
+	</p>
+<pre>
+<code>
+var str = String("25");
+var num = Number("10");
+var bool = Boolean(0);
+</code>
+</pre>	
+	<p>
+	 Case 2: The Math and JSON objects exist in the system and cannot be used as constructors. If this functionality
+	 is needed then the objects themselves should be used directly.
+	</p>
+<pre>
+<code>
+var abs = Math.abs(-10);
+var json = JSON.stringify({name:'stelios'});
+</code>
+</pre>	
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>

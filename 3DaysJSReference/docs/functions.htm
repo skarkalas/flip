@@ -1,0 +1,476 @@
+<section>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		Functions
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<article>
+		<header>
+			Function Scope
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		Variables in JavaScript are defined in a function scope not in a block scope. That means that variables are not visible outside a function but they are visible outside a block.
+		</p>
+<pre>
+<code>
+function f()
+{
+//function scope
+//global & local are visible 
+//local gets created and assigned the value 'undefined'
+    text.write(global, local, '\n');
+    
+//local is used 'before' it is declared 
+    if (local === 2)
+    {
+        //no block scope
+        //local is assigned a new value
+        var local = 3;
+        text.write(global, local, '\n');
+    }
+    
+    text.write(global, local, '\n');
+}
+
+//global scope
+//only global is visible
+// global exists -- even if not declared yet
+text.write(global, local, '\n');
+var global = 1;
+f();
+// local does not -- even after calling f()
+text.write(global, local, '\n');
+</code>
+</pre>
+	</article>
+	<article>
+		<header>
+			Parameter Overloading
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		Functions can be called with any number of arguments. If the arguments are more than the formal parameters given in the definition they are simply ignored. If they are less than expected the value 'undefined' replaces the missing arguments.
+		</p>
+<pre>
+<code>
+function plus(a, b)
+{
+    return a + b;
+}
+
+var s = plus(3, 5);
+
+text.clear();
+text.write(s, '\n');    //8
+
+s = plus(3, 5, 6, 8, 9);
+
+text.write(s, '\n');    //8
+
+s = plus(3);
+
+text.write(s, '\n');    //NaN
+</code>
+</pre>
+		<p>
+		The value 'undefined' plus a number is NaN (not a number).
+		</p>
+		<p>
+		Inside a function there exists a special object that behaves like an array and is called 'arguments'. This object is not accessible outside the function and holds the values of all the arguments that have been passed after a function call. The values in the arguments object are indexed and the object provides a length property that indicates the number of them. The following example shows how this object can be used to simulate parameter overloading:
+		</p>
+<pre>
+<code>
+function plus()
+{
+    var i = null;
+    var sum = 0;
+    
+    for(i = 0; i < arguments.length; i++)
+    {
+        sum += arguments[i];
+    }
+    
+    return sum;
+}
+
+text.clear();
+
+var s = plus(3, 5);
+text.write(s, '\n');    //8
+
+s = plus(3, 5, 6, 8, 9);
+text.write(s, '\n');    //31
+
+s = plus(3);
+text.write(s, '\n');    //3
+</code>
+</pre>
+	</article>	
+	<article>
+		<header>
+			Inner Functions
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		A function can be declared in another function. In this case it exists, like any other variable, only within the enclosing function.
+		</p>
+<pre>
+<code>
+function calc(a, b)
+{
+    function plus(a, b)
+    {
+        return a + b;
+    }
+    
+    function minus(a, b)
+    {
+        return a - b;
+    }
+    
+    return plus(a, b) + minus(a, b);
+}
+
+var x = calc(4, 6);
+
+text.clear();
+text.write(x);
+
+var z = plus(4, 6);     //not defined
+</code>
+</pre>
+	</article>
+	<article>
+		<header>
+			Lexical Scope vs Dynamic Scope
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		Functions in JavaScript have lexical scope as opposed to dynamic scope. That means that their scope is created when they are defined, not when they are executed. In other words the function remembers the scope it had during its definition. If something changes in that scope the function will be able to access it even after its definition.
+		</p>
+		<p>
+		The following example shows that function f2 does not have access to variable b because b was not in its scope when f2 was defined. The fact that f2 gets executed in the same 'space' as b makes no difference. The scope of f2 is its own space (body) plus the global space. Therefore it can only 'see' the variables c and a.
+		</p>
+<pre>
+<code>
+var a = 1;
+
+function f1()
+{
+    var b = 2;
+    f2();
+}
+
+function f2()
+{
+    var c = 3;
+    text.write(a, '\n');
+    text.write(b, '\n');    //not defined
+    text.write(c, '\n');
+}
+
+text.clear();
+
+f2();
+</code>
+</pre>
+	</article>
+	<article>
+		<header>
+			Closures
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		Variables that exist within a function are like private data members. They are not accessible outside of it unless there is a closure present. A closure is a 'break' in their scope. Through a closure the private scope of the function can be exposed to members of the rest of the world that are not supposed to have access to it. Let's illustrate that with an example. Both f2 and f3 don't have access to the inner space of f1 until f1 gets executed and the return value is assigned to f3. The return value is a function that exposes b. Remember that a function remembers its scope at definition time. Therefore the returned function will remember the inner scope of f1 for ever! Variable b is now accessible to f3 but not to f2, although both variables share the same global scope. Both f2 and f3 are defined in the same environment and none of them is supposed to know what is happening in f1. But now f3 has the privilege of having 'exclusive' access to f1's internal variable.
+		</p>
+<pre>
+<code>
+var a = 1;
+
+function f1()
+{
+    var b = 2;
+    
+    return function()
+    {
+        return b;
+    };
+}
+
+function f2()
+{
+    var c = 3;
+    //return b;   //not defined
+}
+
+var f3 = f1();
+
+text.clear();
+
+text.write(f2(), '\n');     //undefined
+text.write(f3(), '\n');     //2
+</code>
+</pre>
+	</article>	
+	<article>
+		<header>
+			Functions as Objects
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		Functions can also be used as objects. They can be given properties (data and functions). The following shows how to use a function that represents a dog. This function is a single instance of an object that has two properties (public data members) one of which is behaviour (bark). Both of them can be considered as static data members in the Java sense.
+		</p>
+<pre>
+<code>
+function dog(){}
+
+dog.legs = 4;
+dog.bark = function()
+{
+    text.write('woof');
+};
+
+text.write(dog.legs);   //4
+dog.bark();             //woof
+</code>
+</pre>
+		<p>
+		The following is a more interesting example. It shows how to create a singleton object that has private data members that can be exposed through public methods. This is achieved through closures. Note that we have to execute the function first in order to 'build' the object.
+		</p>
+<pre>
+<code>
+function dog()
+{
+    var _legs = 4;
+    var _breed = '';
+    
+    function getLegs()
+    {
+        return _legs;
+    }
+
+    function setBreed(breed)
+    {
+        _breed = breed;
+    }
+
+    function getBreed()
+    {
+        return _breed;
+    }
+    
+    dog.getLegs = getLegs;
+    dog.setBreed = setBreed;
+    dog.getBreed = getBreed;
+}
+
+
+dog();		//create instance
+dog.setBreed('Siberian Husky');
+
+text.clear();
+text.write(dog.getLegs(), '\n');	//4
+text.write(dog.getBreed(), '\n');	//Siberian Husky
+</code>
+</pre>
+	</article>	
+	<article>
+		<header>
+			The 'this' Value
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		Singleton objects can also be created using the object literal notation.
+		</p>
+<pre>
+<code>
+var dog =
+{
+    legs : 4,
+    bark : function()
+    {
+        text.write('woof');
+    }
+};
+
+text.clear();
+text.write(dog.legs, '\n'); //4
+dog.bark();     //woof
+</code>
+</pre>
+		<p>
+		In this case there is also the ability to use the word 'this' to refer to the object's properties from within the object itself.
+		</p>
+<pre>
+<code>
+var dog =
+{
+    name : 'dillinger',
+    bark : function()
+    {
+        text.write('woof I am ' + this.name);
+    }
+};
+
+text.clear();
+dog.bark(); //woof I am dillinger
+</code>
+</pre>
+	</article>
+	<article>
+		<header>
+			Constructor Functions
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		A third and more versatile method to create objects is by using constructor functions. Functions in this case are used as blueprints for the construction of identical objects. If the function call is combined with the word 'new' then a new object is constructed and implicitly returned. Function parameters can be used as construction parameters as they can be assigned to properties of the newly created object. If the word 'new' is not used then the function is executed as a normal function.
+		</p>
+<pre>
+<code>
+function Dog(name)
+{
+    this.name = name;
+    this.bark = function()
+    {
+        text.write('woof I am ' + this.name);
+    };
+}
+
+text.clear();
+var dog1 = new Dog('dillinger');	//construction with new
+var dog2 = new Dog('costello');	//construction with new
+
+dog1.bark(); //woof I am dillinger
+dog2.bark(); //woof I am costello
+</code>
+</pre>
+	</article>
+	<article>
+		<header>
+			The Object's Environment
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		The objects that were created in the previous sections have public properties. There are cases where we need to hide some of the implementation. That can be achieved by using the object's environment. The objects' methods are functions that are defined within other functions (constructor functions). That means that they remember their scope after the construction of the object. The scope of the constructor remains private. If we place some of the implementation in the constructor, then it will be hidden from the outside world but accessible by the functions defined in it (member methods of the object). Using this technique, the newly created objects can have privileged access through their methods (closure) to the constructor's private space.
+		</p>
+<pre>
+<code>
+function Dog(name)
+{
+    var _name = name;
+    this.bark = function()
+    {
+        text.write('woof I am ' + _name);
+    };
+}
+
+text.clear();
+var dog1 = new Dog('dillinger');	//construction with new
+var dog2 = new Dog('costello');	//construction with new
+
+dog1.bark(); //woof I am dillinger
+dog2.bark(); //woof I am costello
+dog1.bark(); //woof I am dillinger
+</code>
+</pre>
+		<p>
+		Note that the two objects above do not use a single and shareable environment. Their environment is not the constructor object itself but rather a distinct copy of it that gets created for each individual object. That explains the fact that the initialisation of the second object does not change the name of the first one.
+		</p>
+	</article>
+	<article>
+		<header>
+			The Prototype
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		Functions are objects that have properties. One of its properties that is of great importance is the ‘prototype’. This property gets created by the system when the function is defined and is initially assigned an empty object. This object is not used by the function for anything and it remains inactive until the function is used as a constructor. In this case the object comes to life and is implicitly linked to the newly created objects. The new objects can then access the prototype’s properties as if they were their own.
+		</p>
+<pre>
+<code>
+function Dog(name)
+{
+    var _name = name;
+    this.bark = function()
+    {
+        text.write('woof I am ' + _name +
+	' and I have ' + this.legs + ' legs');
+    };
+}
+
+Dog.prototype.legs = 4;
+
+text.clear();
+var dog1 = new Dog('dillinger'); //construction with new
+var dog2 = new Dog('costello'); //construction with new
+
+dog1.bark(); //woof I am dillinger and I have 4 legs
+text.write('\n');
+dog2.bark(); //woof I am costello and I have 4 legs
+</code>
+</pre>
+		<p>
+		Note that the prototype is a single and therefore shareable object among the new instances of Dog. That means that if the value of this.legs change that will affect all the existing and future objects of this type.
+		</p>
+	</article>	
+	<article>
+		<header>
+			Inheritance – The Prototype Chain
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		The prototype property is a regular object that can be itself created using the new operator and a constructor function. That implies that the prototype is implicitly linked to its constructor prototype. If a prototype is linked to another prototype then it has access to its properties. This is how inheritance is implemented. There can be a linked list of prototypes that form a prototype chain. Prototypes that are lower in the chain inherit all the properties of all the previous prototypes. The objects(s) that exist at the end of the chain inherit everything.
+		</p>
+<pre>
+<code>
+Animal.prototype = {};
+
+function Animal()
+{
+   this.isHeterotroph = true;
+   this.canReproduce = true;
+   this.canMove = true;
+}
+
+Pet.prototype = new Animal();
+
+function Pet()
+{
+    this.offersCompany = true;
+    this.isLoyal = true;
+}
+
+Dog.prototype = new Pet();
+Dog.prototype.legs = 4;
+
+function Dog(name)
+{
+    var _name = name;
+    this.toString = function()
+    {
+        var str = '';
+        str += 'name:' + _name + '\n';
+        str += 'isHeterotroph:' + this.isHeterotroph + '\n';
+        str += 'canReproduce:' + this.canReproduce + '\n';
+        str += 'canMove:' + this.canMove + '\n';
+        str += 'offersCompany:' + this.offersCompany + '\n';
+        str += 'isLoyal:' + this.isLoyal + '\n';
+        str += 'legs:' + this.legs + '\n';
+        return str;
+    };
+}
+
+text.clear();
+var dog = new Dog('dillinger');  //construction with new
+text.write(dog.toString());	//name:dillinger
+				//isHeterotroph:true
+				//canReproduce:true
+				//canMove:true
+				//offersCompany:true
+				//isLoyal:true
+				//legs:4
+</code>
+</pre>
+	</article>		
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</section>

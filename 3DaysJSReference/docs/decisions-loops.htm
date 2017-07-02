@@ -1,0 +1,320 @@
+<section>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		Decisions and Loops
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	The ability to make decisions depending on conditions defined in a program makes the program more 'intelligent', flexible and therefore useful.
+	</p>
+	<p>
+	In what we have seen so far the execution was almost always sequential (the only exception is the conditional operator). Sequential execution means that the statements in a program get executed (sequentially) one after the other and after all of the statements have been executed the task is finished. That means that there is only one path of execution. When decisions are used in a program, there are more than one possible paths of execution. The program decides dynamically which path to follow depending on the value of an expression, which is used as a condition. The condition is an expression that may involve combinations of variables and literals of any type and that can be always evaluated to a value of type Boolean.
+	</p>	
+	<article>
+		<header>
+			Single-selection Structure 'if'
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This structure is used to execute one or more statements if the given condition is evaluated to true. The following code displays a dialog box with the message 'here I am' because the condition <code>5 > 3</code> evaluates to true.
+		</p>	
+<pre>
+<code>
+if(5 > 3)
+{
+	alert('here I am!');
+}
+</code>
+</pre>
+		<p>
+		If there is only one statement that depends on the condition, then it can be given without the curly braces but it is good practice to use them for clarity and readability.
+		</p>
+		<p>
+		Structures can also nest within other structures. The following code checks whether the value of <code>x</code> is between 5 and 10. If that is not the case then the code is ignored and execution continues with the next statement after the block.
+		</p>		
+<pre>
+<code>
+var x = 15;
+if(x > 5)
+{
+	if(x < 10)
+	{
+		alert('number within range');
+	}
+}
+</code>
+</pre>
+		<p>
+		The same could also be achieved with a single structure that checks two conditions.
+		</p>
+<pre>
+<code>
+if(x >5 && x < 10)
+{
+	alert('number within range');
+}
+</code>
+</pre>
+	</article>
+	<article>
+		<header>
+			Double-selection Structure 'if-else'
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This structure is used when we have two mutually exclusive paths of execution. That means that there are only two possible distinct paths and one of them will be followed. The following example demonstrates the use of this structure:
+		</p>	
+<pre>
+<code>
+var grade = 56;
+if(grade > 50)
+{
+	alert('pass');
+}
+else
+{
+	alert('fail');
+}
+</code>
+</pre>
+	</article>
+	<article>
+		<header>
+			Multiple-selection Structure 'if-else if-else' & 'switch'
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This is a structure that can provide more than two mutually exclusive paths of execution. It can be implemented in two different ways but the most common one is to extend the double selection structure. The following example is illustrative:
+		</p>	
+<pre>
+<code>
+var option = 3;
+if(option === 1)
+{
+	alert('show main menu');
+}
+else if(option === 2)
+{
+	alert('deposit money');
+}
+else if(option === 3)
+{
+	alert('withdraw money');
+}
+else
+{
+	alert('exit application');
+}
+</code>
+</pre>
+		<p>
+		Another possible implementation is the <code>switch</code> structure. In this case the condition is broken in two parts. The first part is given in the <code>switch</code> clause and the second part is given in the <code>case</code> clause. The following is equivalent to the previous example:
+		</p>
+<pre>
+<code>
+switch(option)
+{
+	case 1:
+		alert('show main menu');
+		break;
+	case 2:
+		alert('deposit money');
+		break;
+	case 3:
+		alert('withdraw money');
+		break;
+	default:
+		alert('exit application');
+}
+</code>
+</pre>
+		<p>
+		Note the use of <code>break</code> after every case is tested. If <code>break</code> is not used after the execution of the statements in one of the alternative paths, then execution will continue with the statements in the next path and so on. The keyword <code>break</code>, when called, breaks out of the switch and the program continues with the statement that follows.
+		</p>
+		<p>
+		The two methods are not always equivalent. Switch is safer to use (but less flexible) because it does not let the programmer mix different variables in the condition. It is also not as expressive as <code>if</code> because the only permissible operator in it is strict equality (===). Also, the fact that the condition is not given in a single statement makes the code less readable.
+		</p>	
+		<p>
+		Another alternative is to use the switch like a multiple if statement. Although this is permissible in JavaScript, it should be avoided because the actual <code>if</code> is obviously a better and more natural alternative.
+		</p>	
+<pre>
+<code>
+var x = 3;
+switch(true)
+{
+	case x < 0:
+		alert('stop');
+		break;
+	case x < 10:
+		alert('below ten');
+		break;
+	default:
+		alert('beyond limit');
+}
+</code>
+</pre>		
+	</article>
+	<article>
+		<header>
+			Repetition Structure 'while'
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This works like the single selection structure. The difference in this case is that the program executes repetitively the statement(s) associated with it as long as the condition evaluates to true. An example follows:
+		</p>
+<pre>
+<code>
+var counter = 0;
+while(counter < 30)
+{
+	counter += 1;
+}
+</code>
+</pre>
+		<p>
+		This structure is normally used when we don't know the precise number of iterations in advance.
+		</p>
+	</article>
+	<article>
+		<header>
+			Repetition Structure 'do-while'
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		The difference between this structure and the previous one is that the statement(s) associated with the structure are executed at least once regardless of the truth-value of the condition.
+		</p>
+<pre>
+<code>
+var counter = 50;
+do
+{
+	counter += 1;
+}
+while(counter < 30);
+</code>
+</pre>
+		<p>
+		This structure is especially useful when input validation is needed. The input can be obtained within the block and then checked in the condition. If it is not acceptable, then the condition evaluates to true and the same process is repeated again.
+		</p>
+	</article>
+	<article>
+		<header>
+			Repetition Structure 'for'
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This is like the while structure but it can be expressed in a more compact way. It is usually used when we know in advance the number of repetitions that need to be executed.
+		</p>
+<pre>
+<code>
+var i = null;
+for(i = 0; i < 5; i++)
+{
+	alert(i);
+}
+</code>
+</pre>
+		<p>
+		The <code>for</code> statement comprises three parts that are separated by semicolon. The first part is executed only once at the beginning and provides initial values to the variables that are going to be used in the loop. The second part is the condition that evaluates before every iteration. The third part is executed after every iteration and changes the values of the variables. If more than one variable is needed for the loop then these variables can be separated by commas.
+		</p>
+<pre>
+<code>
+var i = null, j = null;
+for(i = 0, j = 10; i < j; i++, j--)
+{
+	alert(i + j);
+}
+</code>
+</pre>
+		<p>
+		Programmers very often use the <code>for</code> structure to traverse arrays. Consider the following example:
+		</p>
+<pre>
+<code>
+var array = [10, 8, 2];
+var sum=0;
+for(var I = 0; I < array.length; i++)
+{
+	sum += array[i];
+}
+</code>
+</pre>
+		<p>
+		After the execution of the above the value of the variable <code>sum</code> will be equal to 20.
+		</p>
+	</article>
+	<article>
+		<header>
+			Repetition Structure 'for in'
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This is a variation of the previous structure that can be used to iterate through the enumerable properties of an object.
+		</p>
+<pre>
+<code>
+var o = {};
+o.name = 'Maria';
+o.age = 22;
+o.gender = 'F';
+var property = null;
+for(property in o)
+{
+	alert(property + ':' + o[property];
+}
+</code>
+</pre>
+		<p>
+		The condition that gets evaluated in the above example is <code>property in o</code>. Every time the condition is evaluated the variable property is assigned a string value that corresponds to the next property of the object <code>o</code>. The condition evaluates to false when there are no more properties to process. This methods should not be used to traverse arrays.
+		</p>
+	</article>
+	<article>
+		<header>
+			'break' and 'continue' statements
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		These statements offer methods to change the default behaviour of the repetition structures. When a break statement is used in an execution path that is associated with a repetition structure then the execution of this path stops and resumes with the next statement after the structure. The following example will clarify this process.
+		</p>
+<pre>
+<code>
+var result = "";
+
+while(true)
+{
+	result+="1";
+	result+="1";
+	result+="1";
+	break;
+	result+="1";
+	result+="1";
+	result+="1";
+}
+</code>
+</pre>
+		<p>
+		The break statement will terminate the execution of the structure and therefore the value of result after this operation will be "111" and not "111111".
+		</p>
+		<p>
+		What if we want for some reason to skip a few statements of this execution path but not terminate the execution of the structure? This is where the continue statement comes into play. The continue statement does not terminate the execution of the structure but rather forces the system to ignore all the statements that follow until the end of the block. The example follows.
+		</p>
+<pre>
+<code>
+for(i = 0; i < 2; i++)
+{
+	result+="1";
+	result+="1";
+	result+="1";
+	continue;
+	result+="2";
+	result+="2";
+	result+="2";
+}
+</code>
+</pre>
+		<p>
+		This structure will iterate two times. The use of continue doesn't affect the number of iterations. All the statements after the continue statement will be ignored and the value of the variable <code>result</code> will be "111111" after the completion of this task.
+		</p>	
+	</article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+</section>

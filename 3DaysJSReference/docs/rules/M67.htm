@@ -1,0 +1,21 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		Pointless comparison operation
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	A variable or value can be compared to itself for equality but it is completely pointless and potentially confusing. The following is
+	valid but it should be avoided:
+	</p>
+<pre>
+<code>
+var x = 10;
+if (x === x)
+{
+    x = 20;
+}
+</code>
+</pre>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>

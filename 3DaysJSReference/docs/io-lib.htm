@@ -1,0 +1,123 @@
+<section>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		The '3DaysJSText' I/O Library
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<article>
+		<header>
+			I/O in the Browser
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		I/O in the browser is limited to the functions <code>alert()</code>, <code>confirm()</code> and <code>prompt()</code>. These functions
+		are very primitive and provide limited functionality. When called they block the main (and only) thread of execution
+		which can be a problem in certain cases and the information that is exchanged is limited.
+		</p>
+	</article>
+	<article>
+		<header>
+			The '3DaysJSText' Library
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		This library was built in 3 days, hence the name. It is simple to use and provides the following public
+		interface:
+		</p>
+		<ul>
+			<li>clear() - remove text from the display area</li>
+			<li>write(v1,v2,..vn) - display unformatted output</li>
+			<li>printf('format',v1,v2,..vn) - display formatted output</li>
+			<li>read(o1,o2,..on) - read information from the user</li>
+		</ul>
+		<p>
+		This interface is exposed in FLIP through the object 'text'
+		</p>
+	</article>
+	<article>
+		<header>
+			clear()
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		This method removes all the content from the text display area (text previously written by other statements).
+		</p>
+<pre>
+<code>
+text.clear();
+</code>
+</pre>		
+	</article>	
+	<article>
+		<header>
+			write(v1,v2,..vn)
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		This method displays the given text on the display. It accepts any number of arguments and enumerates automatically objects.
+		</p>
+<pre>
+<code>
+text.clear();
+var n = 5;
+var s = 'Lorna';
+var o = {name:'lorna',age:55};
+text.write(n,'\n',s,'\n',o);
+</code>
+</pre>		
+	</article>		
+	<article>
+		<header>
+			printf('format',v1,v2,..vn)
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		This method displays formatted text on the display. It accepts any number of arguments and enumerates automatically objects.
+		works like the well-known homonymous function in C (and Java). It receives as a first parameter a string that may contain
+		formatting specifiers and the parameters that follow correspond to the given specifiers. The only difference is that
+		in this version we have an extra specifier for objects <code>%O</code>.
+		</p>
+<pre>
+<code>
+text.clear();
+text.printf('|%-20s|\n','Maria');
+text.printf('|%20.2f|\n',12.59874513);
+text.printf('|%20d|\n',55);
+text.printf('%O\n',{name:'Lorna',age:55});
+</code>
+</pre>		
+	</article>		
+	<article>
+		<header>
+			read(o1,o2,..on)
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		This method gets input from the user. It has to be parameterised with objects that have a predefined format. This
+		format specifies the type of data required and is used for input validation. The format follows:
+		</p>
+		<p>
+		{name:'...',type='number|string|boolean|date',prompt:'...'}
+		</p>
+<pre>
+<code>
+text.clear();
+var name = {name:'name',type:'string',prompt:'who are you?'};
+var age = {name:'age',type:'number',prompt:'how old are you?'};
+var dob = {name:'birthdate',type:'date',prompt:'give me your date of birth'};
+var input = text.read(name,age,dob);
+name = input.name;
+age = input.age;
+dob = input.birthdate;
+text.write(name, '\n');
+text.write(age, '\n');
+text.write(dob.toString(), '\n');
+</code>
+</pre>
+		<p>
+		Note that if the required data is of type Date then an object is returned. In this case its value 
+		can be obtained through methods.
+		</p>
+	</article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</section>

@@ -1,0 +1,62 @@
+<section>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		Assignment
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<article>
+		<header>
+			Assignment Operator
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		The assignment operator is a binary operator because it requires two operands. Its right-hand operand can be any valid JavaScript expression, whereas its left-hand operand should be a variable identifier. This operator evaluates the right-hand operand and assigns the result to its left-hand operand. The following statement demonstrates such an operation:
+		</p>
+<pre>
+<code>
+var x = 4 + 5;
+</code>
+</pre>		
+		<p>
+		If many assignment operations are present in the same statement, they get evaluated from right to left.
+		</p>
+<pre>
+<code>
+var x = null;
+var y = null;
+x = y = 4 + 5;
+</code>
+</pre>
+		<p>
+		The above statement evaluates 4 + 5 and then the result is assigned first to y and then to x.
+		</p>
+	</article>
+	<article>
+		<header>
+			Compound Assignment
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		The compound assignment operators are all binary operators. The right-hand operand can be any valid JavaScript expression, whereas the left-hand operand should be a variable. Operators that belong to this category are combinations of an arithmetic operator and the assignment operator and can be used as a shortcut notation. A compound assignment operation can be decomposed into two distinct operations: one arithmetic operation and one assignment operation that follows. The following example shows how these operators can be used:
+		</p>	
+<pre>
+<code>
+x = x + 5;
+x += 5;
+</code>
+</pre>
+		<p>
+		The above statements are equivalent and therefore they can be used interchangeably. The available compound assignment operators follow:
+		</p>
+<pre>
+<code>
+Subtraction assignment operator:	-=
+Addition assignment operator:		+=
+Multiplication assignment operator:	*=
+Division assignment operator:		/=
+Modulus assignment operator:		%=
+</code>
+</pre>	
+	</article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</section>

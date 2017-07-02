@@ -1,0 +1,36 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		A variable has not been initialised on declaration 
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	If a variable is declared but not initialised it takes the value (and type) of undefined.
+	</p>
+<pre>
+<code>
+function f()
+{
+    var a;
+    a = 1;
+    return a;
+}
+</code>
+</pre>	
+	<p>
+	 That might not be what the programmer intended to do and it is a potentially problematic statement. It is better
+	 practice to always initialise the variables on declaration. If there is no available value then the value null
+	 can be given.
+	</p>
+<pre>
+<code>
+function f()
+{
+    var a = 0;
+    a = 1;
+    return a;
+}
+</code>
+</pre>	
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>

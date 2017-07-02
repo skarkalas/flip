@@ -1,0 +1,113 @@
+<section>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		Miscellaneous Operators
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<article>
+		<header>
+			Comma
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This is a binary operator. Its operands can be expressions or variables of any type. In a comma operation the left-hand operand is evaluated first and the right-hand one follows. The value that is returned is the value of the right-hand operand. The following would return 4.
+		</p>
+<pre>
+<code>
+3, 4;
+</code>
+</pre>	
+		<p>
+		As with the assignment operator, chaining the comma operator is possible. The following would initialise the variable with the value 7.
+		</p>
+<pre>
+<code>
+var x = (2,3,4+9,5,7);
+</code>
+</pre>	
+	</article>
+	<article>
+		<header>
+			Conditional
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This is a ternary operator. The left-hand operand is normally of type 'Boolean', whereas the middle and the right-hand operands can be of any type. If the value of the left-hand operand is evaluated to true then the middle operand is returned, otherwise the right-hand operand is returned. This operator can be used to make the program a bit more intelligent since it provides the ability to make decisions. In the following example the variable 'name' gets assigned the value "Sokratis".
+		</p>
+<pre>
+<code>
+var name = true ? "Sokratis" : "Jenny" ;
+</code>
+</pre>			
+	</article>
+	<article>
+		<header>
+			Xor
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This is a binary operator. It compares the operands bit by bit and returns 1 for each pair where either but not both values are equal to 1.
+		</p>
+	</article>
+	<article>
+		<header>
+			Typeof
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This is a unary operator that operates on a value and returns a string that indicates its type.
+		</p>
+<pre>
+<code>
+typeof 3;		//'number'
+typeof '3';		//'string'
+typeof false;		//'boolean'
+typeof {};		//'object'
+typeof function(){};	//'function'
+typeof new Date();	//'object'
+typeof Date();		//'string'
+typeof null;		//'object'
+typeof x;		//'undefined'
+</code>
+</pre>
+		<p>
+		Note that <code>typeof</code> null returns 'object' and not 'null'.
+		</p>		
+	</article>	
+	<article>
+		<header>
+			Instanceof
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This is a binary operator and tests whether its left operand is an object that has been constructed according to the definition given in the constructor of the right operand.
+		</p>
+<pre>
+<code>
+{} instanceof Object	//true
+</code>
+</pre>
+		<p>
+		Note that the operator returns true even of the object is not a direct descendant of the constructor given. More on that in the Objects section.
+		</p>
+	</article>
+	<article>
+		<header>
+			Void
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This is a unary operator that evaluates its operand and returns the value 'undefined'.
+		</p>
+<pre>
+<code>
+var x = null;
+var y = null;
+y = void (x = 3 + 5);
+alert(x);				//8
+alert(y);				//'undefined'
+</code>
+</pre>		
+	</article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</section>

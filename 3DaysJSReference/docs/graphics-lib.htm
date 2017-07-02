@@ -1,0 +1,115 @@
+<section>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		The '3DaysJSGraphics' 2D Graphics Library
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<article>
+		<header>
+			Graphics in the Browser
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		JavaScript does not inherently support graphics. It relies on the host for this functionality. Graphics can be implemented
+		in many ways in modern browsers. HTML5 provides a fairly standard component that is supported by all the major
+		browsers: the 'canvas'.
+		</p>
+	</article>
+	<article>
+		<header>
+			The '3DaysJSGraphics' Library
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		This is a very lightweight library that is based on the HTML5 canvas component. It provides basic 2D graphics functionality without interactivity
+		(for the time being).
+		</p>
+		<p>
+		This interface is exposed in FLIP through the object 'graphics'.
+		</p>
+	</article>
+	<article>
+		<header>
+			Draw a line
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		The method that draws a line receives the coordinates of two points. You can think of the display as a
+		2D Cartesian system with axes that start from the top left-hand corner. The unit of measurement is pixels. 
+		</p>
+<pre>
+<code>
+graphics.clear();		//clear the area
+graphics.stroke(50,60,80);	//define a colour for the line in RGB
+graphics.line(20,20,50,60);	//draw the line
+</code>
+</pre>		
+	</article>	
+	<article>
+		<header>
+			Draw a rectangle
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		The idea is the same as above. The difference here is that we might need to define a colour for the space
+		inside the shape.
+		</p>
+<pre>
+<code>
+graphics.clear();    		//clear the area
+graphics.stroke(50,60,80);	//define a colour for the line in RGB
+graphics.fill(240,150,80);	//define a colour for the fill in RGB
+graphics.rect(20,20,50,60);	//draw the rectangle
+</code>
+</pre>		
+	</article>	
+	<article>
+		<header>
+			Draw a circle
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		The circle receives as parameters the coordinates of the centre and the radius. 
+		</p>
+<pre>
+<code>
+graphics.clear();        		//clear the area
+graphics.stroke(0,0,0);			//define a colour for the line in RGB
+graphics.fill(240,150,80);		//define a colour for the fill in RGB
+graphics.circle(150,120,50,60);		//draw the circle
+</code>
+</pre>		
+	</article>	
+	<article>
+		<header>
+			Draw some text
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		Text in this case is a shape not series of characters. Therefore all the above apply to text as well.
+		</p>
+<pre>
+<code>
+graphics.fill(50,60,80);
+graphics.font('times new roman',50,'italic');
+graphics.text('Lorna',150,130);
+</code>
+</pre>		
+	</article>
+	<article>
+		<header>
+			Unset colour values
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>		
+		<p>
+		The following methods can be used if there is a need to unset the colour values given for lines and fills.
+		</p>
+<pre>
+<code>
+graphics.noFill();	//remove values for fill
+graphics.noStroke();	//remove values for line
+</code>
+</pre>		
+	</article>	
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</section>

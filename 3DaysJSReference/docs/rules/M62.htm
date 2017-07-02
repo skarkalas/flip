@@ -1,0 +1,33 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		A variable is declared in a block
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	Variables in JavaScript have function scope. Declaring a variable in a block does not restrict its scope within
+	that block. The following is permissible by the language but doesn't mean that the variable i is not going to be
+	available outside of the loop.
+	</p>
+<pre>
+<code>
+for (var i = 0; i < 5; i++)
+{
+	alert(i);
+}
+</code>
+</pre>	
+	<p>
+	 It is therefore better to prevent potential misunderstandings and declare the iterator outside of the loop.
+	</p>
+<pre>
+<code>
+var i;
+for (i = 0; i < 5; i++)
+{
+	alert(i);
+}
+</code>
+</pre>	
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>

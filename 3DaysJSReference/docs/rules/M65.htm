@@ -1,0 +1,28 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		Unnecessary use of the Object constructor
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	An object can be constructed either with a constructor or using the object literal notation. The following statements are
+	equivalent:
+	</p>
+<pre>
+<code>
+var x = new Object();
+var y = {};
+</code>
+</pre>
+	<p>
+	The object literal notation is the preferred method because the alternative can be dangerous. The constructor is
+	a property of the global object and as such it can be overwritten. In this case the construction fails.
+	</p>
+<pre>
+<code>
+Object = null;
+var x = new Object();
+</code>
+</pre>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>

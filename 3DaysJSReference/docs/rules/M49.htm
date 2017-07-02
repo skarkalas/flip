@@ -1,0 +1,27 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		A variable is expected to be declared but it is not
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	The assignment cannot be used instead of the comma operator in a multiple declaration statement. The following
+	code is valid but conveys a potential misunderstanding:
+	</p>
+<pre>
+<code>
+var x = y = z = 10;
+</code>
+</pre>
+	<p>
+	Only x is declared. The remaining two variables are only assigned values. If this is intended to be a multiple
+	assignment statement then the following is needed:
+	</p>
+<pre>
+<code>
+var x, y, z;
+x = y = z = 10;
+</code>
+</pre>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>

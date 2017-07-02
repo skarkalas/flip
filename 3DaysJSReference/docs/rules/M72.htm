@@ -1,0 +1,39 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		Unexpected break statement
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	There is a break statement in a loop that will terminate it after the first iteration. 
+	</p>
+<pre>
+<code>
+var x = 7;
+
+while(x > 0)
+{
+	x--;
+	break;  
+}
+</code>
+</pre>	
+	<p>
+	Statements like break (or continue) should always be wrapped in a decision structure.
+	</p>
+<pre>
+<code>
+var x = 7;
+
+while(x > 0)
+{
+	x--;
+	if(x === 5)
+	{
+		break;
+	}
+}
+</code>
+</pre>		
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>

@@ -1,0 +1,45 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		A variable is referenced outside of its scope 
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	Variables in JavaScript have function scope. Declaring a variable in a block does not restrict its scope within
+	that block. Therefore, technically the following is not a problem as it is permissible by the language:
+	</p>
+<pre>
+<code>
+function f(a)
+{
+    if (a > 4)
+    {
+        var x = 1;
+    }
+    
+    return x;
+}
+</code>
+</pre>	
+	<p>
+	 However, if the argument a is less than or equal to 4, the returned value is 'undefined'. This is probably not
+	 intended by the programmer. In any case it is better practice to declare variables outside of blocks and pretend
+	 that block scope exists.
+	</p>
+<pre>
+<code>
+function f(a)
+{
+    var x = 0;
+    
+    if (a > 4)
+    {
+        x = 1;
+    }
+    
+    return x;
+}
+</code>
+</pre>	
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>

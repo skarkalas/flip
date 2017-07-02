@@ -1,0 +1,185 @@
+<section>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		JavaScript vs Java
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	At a quick
+	glance, JavaScript and Java look very similar. This is no coincidence.
+	When Brendan Eich showed the first prototype of his language to
+	Netscape executives, they told him it was OK but he had to "make it
+	look more like Java". But this apparent similarity is misleading: Java
+	and JavaScript are quite different languages. Thinking they are
+	"almost" the same is a common source of bugs.
+	</p>
+	<p>
+	The main (simple but crucial) differences between Java and JavaScript are summarised below:
+	</p>
+ 	<article>
+		<header>
+			Typing
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		Java has static typing. JavaScript has dynamic typing.
+		</p>
+		<p>
+		The following code is invalid in Java, but valid in JavaScript.
+		</p>
+<pre>
+<code>
+var x;
+x = 1;
+x = 1.0;
+x = "one";
+</code>
+</pre>		
+	</article>
+ 	<article>
+		<header>
+			Declaration of variables
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		In Java every variable must be declared (we must say what type it is) before or at the same time it is used for the first time. This is not so in JavaScript.
+		</p>
+<pre>
+<code>
+var n = 1; // this is valid JavaScript, the interpreter "guesses" n is integer
+</code>
+</pre>		
+	</article>
+ 	<article>
+		<header>
+			Scope
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		In Java, a variable only exists (i.e. can be accessed for reading or writing) after it has been declared. This is not so in JavaScript.
+		</p>
+		<p>
+		The following code is invalid in Java, but valid in JavaScript.
+		</p>
+<pre>
+<code>
+i = 1;
+var i = 0;
+</code>
+</pre>		
+		<p>
+		same as the following one:
+		</p>
+<pre>
+<code>
+n = 1;
+for (var i = 0; i < 10; i++)
+{
+    var n = n + 1;
+}
+</code>
+</pre>	
+		<p>
+		Note: Strictly speaking, variables in Java have posterior block-scope
+		while variables in JavaScript have global function-scope. Block-scope
+		is delimited by curly braces { and }. Function scope is defined by the
+		definition of a function. If a variable in javaScript is not defined
+		inside a function, it is truly global and can be read and written to
+		*anywhere* in the code. This a common source of bugs, especially for
+		programmers more familiar with Java than with JavaScript.
+		</p>	
+	</article>
+ 	<article>
+		<header>
+			Semicolons
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		Semicolons are compulsory in Java but optional in JavaScript. The
+		rules that determine when a semicolon is really needed, and what to do
+		when it is left out, are too complex to summarise in a paragraph.
+		Messing up with these rules is a common source of bugs in JavaScript.
+		</p>
+		<p>
+		Rule of thumb: ALWAYS use semicolons in JavaScript, even if they are optional.
+		</p>
+	</article>	
+ 	<article>
+		<header>
+			Objects
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		In Java objects are instances of classes. Classes cannot be modified
+		at runtime. The structure of objects, both state (fields) and
+		behaviour (methods), is mostly static too ---although they can be
+		modified using reflection.
+		</p>
+		<p>
+		In JavaScript there are no classes, and the structure of an object can
+		be modified at runtime adding new state (properties) or behaviour
+		(functions).
+		</p>
+	</article>	
+ 	<article>
+		<header>
+			Functions
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		Functions in JavaScript play mostly the same role that methods play in
+		Java, but there are three differences:
+		</p>
+		<ol>
+			<li>Parameters do not have types (because JavaScript is dynamically-typed)</li>
+			<li>Functions are objects themselves, so they have properties and behaviours like any other object (persons, cars, arrays, etc).</li>
+			<li>As a consequence of the former point, functions can exist by themselves unrelated to objects (playing a role mildly similar to static methods in Java)</li>
+		</ol>
+	</article>
+ 	<article>
+		<header>
+			Numbers
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		In Java there are several types for numbers: int, double, float,
+		Integer, Double, etc. In JavaScript all numbers are of type Number.
+		</p>
+	</article>
+ 	<article>
+		<header>
+			Arrays
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		In Java, arrays are static and lists (such as ArrayLists) are dynamic.
+		In JavaScript arrays are dynamic and there are no lists.
+		</p>
+	</article>
+ 	<article>
+		<header>
+			Exceptions and Errors
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		In Java there are exceptions and errors, and exceptions can be checked
+		or unchecked (i.e. RuntimeException). In JavaScript there are only
+		errors and they are not checked because it is an interpreted, not
+		compiled, language.
+		</p>
+	</article>
+ 	<article>
+		<header>
+			Equality
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		In Java, equality between primitive types is checked with ==.
+		</p>
+		<p>
+		In JavaScript there are two equality operators: == and === (strict
+		equality). As a rule of thumb, use always the strict version (===).
+		</p>		
+	</article>	
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</section>

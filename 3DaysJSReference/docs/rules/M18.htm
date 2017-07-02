@@ -1,0 +1,24 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		An object definition contains multiple properties with the same name 
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	This happens if an object literal contains many properties with the same name.
+	</p>
+<pre>
+<code>
+var x =
+{
+    y: 10,
+    y: 20
+};
+</code>
+</pre>	
+	<p>
+	 The code is not invalid. In the above example the final value of y will be determined by its latest definition.
+	 The problem is that this is evidently accidental and will potentially lead to problems.
+	</p>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>

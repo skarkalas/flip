@@ -1,0 +1,340 @@
+<section>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		Object Data Types
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	Objects can be thought of as complex structures that may contain many literal values and/or other objects. Variables of this category may refer to existing objects or new instances of objects. In the latter case the operator 'new' should precede the type reference in the assignment operation.
+	</p>	
+	<article>
+		<header>
+			Date
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This data type represents the concept of date and time in a program. A variable of that type represents a single moment in time. The following statement creates a new object that represents the current system date and time.
+		</p>
+<pre>
+<code>
+var now = new Date();
+</code>
+</pre>
+		<p>
+		The type reference Date() is called a constructor and should always be used with the 'new' operator. If it is used without the operator it returns a string and not an object.
+		</p>
+		<p>
+		Values of this type cannot have a literal syntax in JavaScript.
+		</p>
+		<p>
+		If a specific date is needed then the constructor can receive initialisation parameters in the following order:
+		</p>
+<pre>
+<code>
+year, month, day, hours, minutes, seconds and milliseconds
+</code>
+</pre>
+		<p>
+		The following variable represents the date <code>Mon Jan 10 2000 22:15:20 GMT+0000</code>:
+		</p>
+<pre>
+<code>
+var some_date = new Date(2000, 0, 10, 22, 15, 20, 990);
+</code>
+</pre>
+		<p>
+		The internal representation of a date object is a numeric (integer) value that counts the number of milliseconds that have elapsed since the 1st of January 1970 UTC. If the number of milliseconds that correspond to a date is known then it can be directly given as a construction parameter to instantiate the corresponding object. The following object represents the date 'May 31, 2014':
+		</p>
+<pre>
+<code>
+var some_date = new Date(1401493590585);
+</code>
+</pre>
+		<p>
+		A third construction method is to use a textual representation of a date that can be parsed and converted to a date. The following is a valid parameter:
+		</p>
+<pre>
+<code>
+var some_date = new Date('Sat May 31 2014 00:52:52 GMT+0100');
+</code>
+</pre>		
+	</article>
+	<article>
+		<header>
+			Array
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This data type represents collections of values of the same or different type. A variable of that type can store any number of values under a single name (identifier). The following statement creates an empty array:
+		</p>
+<pre>
+<code>
+var x = [];
+</code>
+</pre>
+		<p>
+		An array can be given initial values. These values can be given as a comma delimited list within the square brackets.
+		</p>
+<pre>
+<code>
+var x = [2,5,7];
+</code>
+</pre>		
+		<p>
+		If initial values are not available but the space for them needs to be reserved, then the array constructor should be used instead:
+		</p>
+<pre>
+<code>
+var x = new Array(3);
+</code>
+</pre>
+		<p>
+		The elements within an array are indexed with numbers starting from 0. These numbers can be used to reference these elements like individual variables.
+		</p>
+<pre>
+<code>
+var y = x [1];
+</code>
+</pre>
+		<p>
+		If an index value is greater than the capacity of the array in an assignment operation, then the array gets dynamically extended to accommodate the corresponding value. The following statement allocates memory space for three more elements in array 'x':
+		</p>
+<pre>
+<code>
+x[5] = 14;
+</code>
+</pre>
+		<p>
+		Elements 3 and 4 are given the value 'undefined'.
+		</p>
+		<p>
+		The array is not just a container of values. It is an object that provides information about its contents and functions that can be applied on them. An array property that is especially useful is 'length'. The name is self-explanatory. The interesting thing about this property is that it is not read-only. It can be used to dynamically change the length of the array and make it bigger or smaller. In the latter case, the values are discarded. The following statement removes all the elements of 'x' apart from the first 2 (2 and 5).
+		</p>
+<pre>
+<code>
+x.length = 2;
+</code>
+</pre>
+		<p>
+		If an element is to be removed but its memory space needs to be retained, then the operator 'delete' should be used. The following statement removes the first element of 'x'. The length of 'x' is still 2 after the operation.
+		</p>
+<pre>
+<code>
+delete x[0];
+</code>
+</pre>
+		<p>
+		Arrays can also contain other arrays as elements (nested arrays). The above rules apply to nested arrays as well. The following example is illustrative of this case:
+		</p>
+<pre>
+<code>
+var x = [2, 'two', [2, 6, 1], false];
+x[2][1] = 15;	//change 6 to 15
+</code>
+</pre>		
+	</article>	
+	
+	
+	
+	<article>
+		<header>
+			Error
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This data type represents a problem (error) caused by a programmer's mistake or omission. Since this is an interpreted language all the problems are considered run-time errors. As the JavaScript program executes, the system evaluates the code. If a syntax error is found or an expression cannot be evaluated properly the process is interrupted and typically the host environment returns a message to the operator.
+		</p>
+		<p>
+		Objects of that type can either be generated automatically by the system or by the programmer. In the latter case the error constructor must be used. The following statement creates an error object with a text message as a construction parameter:
+		</p>		
+<pre>
+<code>
+var e = new Error('This is an error');
+</code>
+</pre>
+		<p>
+		If an error is generated (thrown) by the system, then the programmer can handle the problem using the try-catch statement. The 'suspicious' part of code must be placed in a try block.
+		</p>
+<pre>
+<code>
+var x = null;
+try
+{
+    x = y * 2;   
+}
+</code>
+</pre>		
+		<p>
+		In the above example the variable y is undefined and therefore should not be used in the expression. The system will generate an error in this case which can be handled by the part that follows:
+		</p>
+<pre>
+<code>
+catch(e)
+{
+    alert(e.name);		// ReferenceError
+    alert(e.message);		// y is not defined
+}
+</code>
+</pre>
+		<p>
+		The catch block is followed by a parenthesised identifier that refers to the error. The name is chosen by the programmer. The object exposes information about what happened through the properties 'name' and 'message'.
+		</p>
+		<p>
+		If an undesirable situation arises and cannot be identified by the system, then the programmer can report the issue explicitly. In this case a constructed error object can be thrown in a try block. The following illustrates this case:
+		</p>
+<pre>
+<code>
+var e = new Error('This is an error');
+
+try
+{
+    throw e;   
+}
+catch(e)
+{
+    alert(e.name);			// Error
+    alert(e.message);			// This is an error
+}
+</code>
+</pre>
+		<p>
+		The error name in the previous example reveals a difference between the two error objects. The former is of type 'ReferenceError' whereas the latter is of type 'Error'. Error() is a generic constructor that can be used for any type of problem. If there is a need to be more specific there are six more constructors that can be used to differentiate the type of problem.
+		</p>
+		<ul>
+			<li>EvalError</li>
+			<li>RangeError</li>
+			<li>ReferenceError</li>
+			<li>SyntaxError</li>
+			<li>TypeError</li>
+			<li>URIError</li>
+		</ul>		
+		<p>
+		If there is code that needs to be executed regardless of whether there was an error or not then a 'finally' clause needs to be included. An example follows:
+		</p>		
+<pre>
+<code>
+var x = null;
+var z = null;
+try
+{
+    x = y * 2;   
+}
+catch(e)
+{
+    x = 2;
+}
+finally
+{
+    z = x * 2;
+}
+</code>
+</pre>
+	</article>		
+	<article>
+		<header>
+			Function
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		Objects of this data type represent activities or actions that take place during the execution of the program. You could think of functions as little programs that reside within other programs. In general, it is good practice to divide a big program into smaller and more manageable chunks of code (Function objects) and then combine them together to perform the required task. Function objects are like processing machines that receive input and return output. For example, it is perfectly reasonable to have an object of that type that receives as input a number and returns its square root in a program that performs mathematical calculations. The following variable holds a reference to a function object that performs subtraction:
+		</p>	
+<pre>
+<code>
+var sub = function(a, b)
+{
+    var result =  a - b;
+    return result;
+}
+</code>
+</pre>
+		<p>
+		The function literal in the above statement includes the word function followed by two parameters within parentheses and a block of statements. The two parameters are variables that exist within the function object and take their names from the identifiers given in the parenthesis. These variables hold the actual values that get passed with the function call. The statements within the curly braces (block) constitute the algorithmic part of the function. In other words they state what needs to be executed so that the function can compute the required output. The output (in this case 2) is sent back to the part of the program that called the function by the command 'return'.
+		</p>
+		<p>
+		The existence of a function does not necessarily mean that the action it represents will eventually be executed. If its service is not needed, the program it resides in may not call it. Calling a function entails a reference of its name in the code along with the actual values for the parameters it expects to receive. These values must be enclosed within parentheses. Even if there are no parameters needed, the parentheses must be present. The following statement calls the above function to perform the task:
+		</p>		
+<pre>
+<code>
+var x = sub(5, 3);	// 2
+</code>
+</pre>
+		<p>
+		As shown above, function objects can be values held in variables. In other words functions are data that can be manipulated like values of any other data type. The following shows how the above function can be assigned to another variable and be called with a different name:
+		</p>
+<pre>
+<code>
+var subtract = sub;
+alert(subtract(8, 4));	//4
+</code>
+</pre>
+		<p>
+		If an argument is omitted during a function call, then the corresponding parameter takes the value 'undefined'.
+		</p>
+		<p>
+		If no return statement is executed in a function, then the value 'undefined' is returned.
+		</p>
+	</article>
+	<article>
+		<header>
+			Object
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		This data type represents real world objects or concepts. An object is an entity that has characteristics and behaviour. The characteristics are called properties and store information about the object's current state. The behaviour is a set of functions that can be used by the object to respond to external stimuli. In practical terms an object is a variable that holds a complex value. This complex value is like an array of variables of various types that hold its state and behaviour. The following statements create an object that represents a dog:
+		</p>	
+<pre>
+<code>
+var dog = {};
+dog.name = 'ludwig';
+dog.breed = 'terrier';
+dog.colour = 'black';
+dog.age = 3;
+dog.bark = function()
+{
+	alert('woof woof');
+};
+</code>
+</pre>
+		<p>
+		This object's state consists of four properties and its behaviour is just one function. A function that is part of an object can also be called 'method'. If we call the method 'bark' on the object 'dog' the object will respond by performing the action (barking).
+		</p>
+<pre>
+<code>
+dog.bark();	// woof woof
+</code>
+</pre>
+		<p>
+		The following is an alternative way to create the above object:
+		</p>
+<pre>
+<code>
+var dog =
+{
+	name: 'ludwig',
+	breed: 'terrier',
+	colour: 'black',
+	age: 3,
+	bark = function()
+	{
+		alert('woof woof');
+	}
+};
+</code>
+</pre>
+		<p>
+		If the object itself wants to refer to its own properties or methods, then the word 'this' can be used instead of its identifier. The following method increases the dog's age by one year:
+		</p>
+<pre>
+<code>
+dog.growOld = function()
+{
+	this.age = this.age + 1;
+};
+</code>
+</pre>
+		<p>
+		This is equivalent to saying that my age becomes equal to my age plus one.
+		</p>
+	</article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</section>

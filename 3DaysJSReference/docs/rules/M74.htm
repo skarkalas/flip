@@ -1,0 +1,74 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		An unnecessary (or unwanted) label 
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	Case 1: There is a label that is not referenced by any (labelled) break or continue statement. 
+	</p>
+<pre>
+<code>
+var x = 7;
+
+function f()
+{
+    y:			//label
+
+    while(x > 0)
+    {
+        x--;
+    }
+}
+</code>
+</pre>	
+	<p>
+	This is not necessarily problematic but it is potentially confusing. The solution is to remove the label.
+	</p>
+	<p>
+	Case 2: There is a label that is properly referenced but it exists in the global scope.
+	</p>
+<pre>
+<code>
+var x = 7;
+
+y:				//label
+
+while(x > 0)
+{
+	x--;
+	if(x === 5)
+	{
+		break y;	//label
+	}
+}
+</code>
+</pre>	
+	<p>
+	All labels are not really needed and using them is bad practice since the same work can be done without them.
+	Labels that exist in the function scope are allowed because they have limited scope and therefore they are more
+	controllable. Although there is no 'goto' statement in JavaScript, labels that exist in the global space are
+	considered less controllable and therefore it is better to avoid them.
+	</p>
+<pre>
+<code>
+var x = 7;
+var y = 6;
+
+while(y > 0)
+{
+	while(x > 0)
+	{
+		x--;
+		if(x === 5)
+		{
+			break;
+		}
+	}
+	
+	y--;
+}
+</code>
+</pre>	
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>

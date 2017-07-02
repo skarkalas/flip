@@ -1,0 +1,86 @@
+<section>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		Comparison
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<article>
+		<header>
+			Comparison Operators
+			<p><time pubdate datetime="2014-05-27"></time></p>
+		</header>
+		<p>
+		These are all binary operators that ideally operate on values of the same type and produce a Boolean value as a result. Since this is a dynamically typed language, it is possible to compare values of different types. In this case the system performs implicit conversions in order to achieve a meaningful comparison. This feature of the language can be the source of difficult to trace bugs and therefore it should be avoided if possible.
+		</p>	
+		<p>
+		The available operators follow:
+		</p>	
+<pre>
+<code>
+Equality		==
+Strict equality		===
+Inequality		!=
+Strict Inequality	!==
+Less than		<
+Less than or equal	<=
+Greater than		>
+Greater than or equal	<=
+</code>
+</pre>		
+		<p>
+		Strict equality and inequality operators do not force type conversions before the operation. That means that the operands must be of the same type. If that is not the case then the value false is returned. These are the preferred operators and they should always be used.
+		</p>
+		<p>
+		Comparison operators should never be used with data types that are not primitive. If they are used with objects they will return invalid results.
+		</p>
+		<p>
+		If the operands are of type 'String' then the operator compares lexicographically their contents character by character using their Unicode values. For example the following example would return the value 'true'.
+		</p>		
+<pre>
+<code>
+"alex" == "alex";
+</code>
+</pre>			
+		<p>
+		If the operands are of a different type, then the system tries to convert them to numbers, strings or booleans and then perform the comparison between them. All of the following examples would return true.
+		</p>		
+<pre>
+<code>
+var x=new Array();
+x[0]=1;
+x[1]=2;
+x=="1,2";	// true
+0=="0";		// true
+true=="1";	// true	
+</code>
+</pre>
+		<p>
+		Since an empty string is treated as the value 0, the following statement would also return true.
+		</p>
+<pre>
+<code>
+0=="";		// true
+</code>
+</pre>	
+		<p>
+		If either or both of the operands have been given the value NaN, the result will always be false, since NaN is not equal to any other permissible value in the system, including its own.
+		</p>
+		<p>
+		Negative zero and positive zero are considered to be equal.
+		</p>
+<pre>
+<code>
+-0==0;				//true
+</code>
+</pre>
+		<p>
+		Values of type Null are considered equal to values of type Undefined. So the following would return true.
+		</p>
+<pre>
+<code>
+null==undefined;		//true
+</code>
+</pre>		
+	</article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</section>

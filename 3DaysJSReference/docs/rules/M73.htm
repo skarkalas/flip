@@ -1,0 +1,30 @@
+<article>
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>
+	<header>
+		{} after decision and loop structures
+		<p><time pubdate datetime="2014-05-27"></time></p>
+	</header>
+	<p>
+	It is syntactically correct not to include {} after a decision or a loop structure if there is only one statement
+	that depends on it.
+	</p>
+<pre>
+<code>
+if(x > 0)
+	x = 1;  
+</code>
+</pre>	
+	<p>
+	Nevertheless, including {} gives more structure and therefore improves readability and makes 
+	debugging easier.
+	</p>
+<pre>
+<code>
+if(x > 0)
+{
+	x = 1;  
+}
+</code>
+</pre>		
+	<img src='./images/go-back.png' style='width:30px' onclick='loadDoc("main");'></img>	
+</article>
